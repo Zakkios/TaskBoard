@@ -27,4 +27,3 @@ Ce tableau définit les actions possibles pour chaque rôle dans l’application
 |---    |:-:    |:-:    |
 | Gérer les comptes utilisateurs       | ❌          | ✅             |
 | Accéder aux statistiques personnelles| ✅          | ✅             |
-| Accéder aux statistiques globales    | ❌          | ✅             |

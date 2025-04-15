@@ -16,4 +16,4 @@
 - Toutes les actions d’un utilisateur
 - Voir les tâches de tous les utilisateurs
 - Supprimer un compte utilisateur
-- Accéder aux statistiques globales
+- Accéder aux statistiques de tous les Utilisateurs
