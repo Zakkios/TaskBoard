@@ -2,13 +2,14 @@
 
 ## Table : Users
 
-| Attribut | Type         | Description                          | Contraintes                          |
-| -------- | ------------ | ------------------------------------ | ------------------------------------ |
-| id_users | UUID         | Identifiant unique de l’utilisateur  | Clé primaire, généré automatiquement |
-| username | VARCHAR(100) | Nom d'utilisateur                    | Unique, requis                       |
-| email    | VARCHAR(150) | Adresse e-mail                       | Unique, requis                       |
-| password | VARCHAR(255) | Mot de passe (hashé)                 | Requis                               |
-| role     | VARCHAR(50)  | Rôle utilisateur (`ROLE_USER`, etc.) | Requis, validé côté backend          |
+| Attribut   | Type         | Description                          | Contraintes                          |
+| ---------- | ------------ | ------------------------------------ | ------------------------------------ |
+| id_users   | UUID         | Identifiant unique de l’utilisateur  | Clé primaire, généré automatiquement |
+| username   | VARCHAR(100) | Nom d'utilisateur                    | Unique, requis                       |
+| email      | VARCHAR(150) | Adresse e-mail                       | Unique, requis                       |
+| password   | VARCHAR(255) | Mot de passe (hashé)                 | Requis                               |
+| role       | VARCHAR(50)  | Rôle utilisateur (`ROLE_USER`, etc.) | Requis, validé côté backend          |
+| created_at | DATETIME     | Date de création                     | Par défaut : now()                   |
 
 ---
 
@@ -28,13 +29,12 @@
 
 ## Table : Tags
 
-| Attribut | Type        | Description                     | Contraintes                                                  |
-| -------- | ----------- | ------------------------------- | ------------------------------------------------------------ |
-| id_tags  | UUID        | Identifiant unique du tag       | Clé primaire                                                 |
+| Attribut | Type        | Description                     | Contraintes                                                   |
+| -------- | ----------- | ------------------------------- | ------------------------------------------------------------- |
+| id_tags  | UUID        | Identifiant unique du tag       | Clé primaire                                                  |
 | name     | VARCHAR(50) | Nom du tag                      | Requis, **unique par utilisateur** (index `(name, id_Users)`) |
-| color    | VARCHAR(10) | Couleur (format HEX)            | Requis                                                       |
-| id_Users | UUID        | Utilisateur propriétaire du tag | Clé étrangère vers Users                                     |
-
+| color    | VARCHAR(10) | Couleur (format HEX)            | Requis                                                        |
+| id_Users | UUID        | Utilisateur propriétaire du tag | Clé étrangère vers Users                                      |
 
 ---
 
