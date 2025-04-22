@@ -1,18 +1,23 @@
-# Image php:8.4.6-apache.
-FROM php:sha256:abce8fe7e3390e96d3ac52dff8e6f5ff9507f4a7bee2b18f11404b74d7efec66
+# Image php:8.4.6-apache-bullseye.
+FROM php:8.4.6-apache-bullseye
 
 # Installez les dépendances système nécessaires pour Symfony
 RUN apt-get update && apt-get install -y \
     git \
     libzip-dev \
     unzip \
-    docker-php-ext-install pdo_mysql
+    libonig-dev \
+    libxml2-dev \
+    libpng-dev \
+    zlib1g-dev \
+    && docker-php-ext-install pdo pdo_mysql zip \
+    && rm -rf /var/lib/apt/lists/*
 
 # Définis le répertoire de travail
 WORKDIR /var/www/
 
 # Copie tous les fichiers du projet Symfony dans le conteneur
-COPY ../../app/backend/ /var/www/html
+COPY app/backend/ /var/www/html
 
 # Installe Composer 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -30,6 +35,7 @@ RUN pecl install xdebug && \
 # Expose le port 8000 (ou tout autre port que vous utilisez pour Symfony)
 EXPOSE 8000
 
-# Lance le serveur Symfony automatiquement lors du démarrage du conteneur
-CMD composer install && \
-    symfony server:start --no-tls --allow-http --port=8000 --listen-ip=0.0.0.0
+# Lance le serveur Symfony 
+COPY docker/scripts/start-backend.sh /usr/local/bin/start-backend.sh
+RUN chmod +x /usr/local/bin/start-backend.sh
+CMD ["start-backend.sh"]

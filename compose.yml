@@ -27,13 +27,13 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     env_file:
-      - path: ./.env
-      - path: ./.env.local
+      - path: ./docker/.env
+      - path: ./docker/.env.local
         required: false
 
   db:
     # Image mysql:8.4
-    image: mysql:sha256:3a89257a3a979e46e3650628bea227a6bc318a2bdc95f954489ec89573a4c6a2
+    image: mysql@sha256:3a89257a3a979e46e3650628bea227a6bc318a2bdc95f954489ec89573a4c6a2
     container_name: db-mysql-taskBoard
     restart: always
     environment:
@@ -58,8 +58,8 @@ services:
       timeout: 5s
       retries: 5
     env_file:
-      - path: ./.env
-      - path: ./.env.local
+      - path: ./docker/.env
+      - path: ./docker/.env.local
         required: false
 
   phpmyadmin:
