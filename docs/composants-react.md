@@ -6,32 +6,55 @@ Ce document recense les composants React prévus pour l’application TaskBoard.
 
 ## 📁 Arborescence des composants
 
+### Architecture FSD (Feature-Sliced Design)
+
 ```bash
-src/
-├── components/
-│   ├── common/
-│   │   ├── Button.tsx
-│   │   ├── Input.tsx
-│   │   ├── Dropdown.tsx
-│   │   ├── Modal.tsx
-│   │   └── Notification.tsx
-│   ├── layout/
-│   │   ├── Sidebar.tsx
-│   │   ├── HeaderUser.tsx
-│   │   └── PageWrapper.tsx
-│   ├── taskboard/
-│   │   ├── KanbanBoard.tsx
-│   │   ├── KanbanColumn.tsx
-│   │   └── TaskCard.tsx
-│   ├── tags/
-│   │   └── Tag.tsx
-│   ├── stats/
-│   │   ├── PieChart.tsx
-│   │   └── BarChart.tsx
-│   └── auth/
-│       ├── LoginForm.tsx
-│       ├── RegisterForm.tsx
-│       └── AuthRedirectLink.tsx
+/src/
+│
+├── app/                 # Initialisation application
+│   ├── providers/       # Contexte global (AuthProvider, ThemeProvider, etc.)
+│   ├── routes/          # Définition des routes
+│   ├── App.tsx          # Composition principale de l'app
+│   └── main.tsx         # Entrypoint Vite/React
+│
+├── shared/              # Éléments totalement réutilisables partout
+│   ├── ui/              # Boutons, Inputs, Loaders, Avatars, etc.
+│   ├── lib/             # Petites fonctions utilitaires (formatDate, classNames, etc.)
+│   ├── config/          # Variables globales, thèmes, etc.
+│   ├── api/             # Configuration Axios et helpers généraux
+│
+├── entities/            # Entités métiers
+│   ├── user/            # Données liées au User
+│   │   ├── model/       # Typescript types, stores
+│   │   ├── ui/          # Petits composants liés à User
+│   │   └── api/         # User API
+│   ├── task/            # Données liées aux Tâches
+│       ├── model/
+│       ├── ui/
+│       └── api/
+│
+├── features/            # Actions/fonctionnalités utilisateur
+│   ├── auth/            # Login / Register / Logout
+│   │   ├── model/       # Stores, hooks liés à Auth
+│   │   ├── ui/          # Formulaires LoginForm, RegisterForm
+│   │   ├── api/         # Appels login / register
+│   ├── taskManagement/  # Ajouter / Modifier / Filtrer des tâches
+│       ├── model/
+│       ├── ui/
+│       ├── api/
+│
+├── widgets/             # Blocs UI indépendants
+│   ├── Header/
+│   ├── Sidebar/
+│   ├── TaskBoard/       # Composant principal du board
+│   ├── StatsBoard/      # Composant de statistiques
+│
+├── pages/               # Pages réelles
+│   ├── login/           # Page de connexion
+│   ├── dashboard/       # Page d'accueil après login
+│   └── not-found/       # Page 404
+│
+└── index.css            # Style global
 ```
 
 ---
