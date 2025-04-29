@@ -1,12 +1,11 @@
 import { Routes, Route } from "react-router";
-import "./App.css";
 import {
   LoginPage,
   RegisterPage,
   DashboardPage,
   StatisticsPage,
   NotFoundPage,
-} from "./../pages/index.ts";
+} from "@/pages/index.ts";
 
 function App() {
   return (

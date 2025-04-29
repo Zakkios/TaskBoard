@@ -1,4 +1,4 @@
-import Logo from "./../../shared/assets/logo.png";
+import Logo from "@/shared/assets/logo.png";
 
 export default function LoginPage() {
   return (
