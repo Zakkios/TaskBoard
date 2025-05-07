@@ -19,7 +19,7 @@ export default function LoginPage() {
       <img
         src={Logo}
         alt="logo"
-        className="absolute top-10 w-[200px] max-w-[40%]"
+        className="absolute top-10 w-[100px] max-w-[40%]"
       />
       <div className="flex items-center justify-center w-[800px] max-w-[90%] h-[400px] bg-primary p-8 rounded-2xl shadow-lg">
         <form
@@ -42,17 +42,17 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <div className="text-center">
-            <p>Tu n’as pas encore de compte ?</p>
-            <TextLink to="/register">Clique ici pour t’inscrire.</TextLink>
-          </div>
           <Button
             type="submit"
             variant="secondary"
-            className="w-[300px] max-w-full"
+            className="w-[300px] max-w-full mt-8"
           >
             Connexion
           </Button>
+          <div className="text-center">
+            <p className="leading-none">Tu n’as pas encore de compte ?</p>
+            <TextLink to="/register">Clique ici pour t’inscrire.</TextLink>
+          </div>
         </form>
       </div>
     </div>
