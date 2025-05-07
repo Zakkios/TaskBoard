@@ -1,0 +1,12 @@
+{
+  "name": "taskboard",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "docker compose up --build -d",
+    "up": "docker compose up -d",
+    "down": "docker compose down",
+    "back": "docker exec -it backend-taskBoard bash",
+    "front": "docker exec -it frontend-taskBoard sh",
+    "sql": "docker exec -it db-mysql-taskBoard mysql -uroot -p$MYSQL_ROOT_PASSWORD"
+  }
+}
