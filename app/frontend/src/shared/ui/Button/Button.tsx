@@ -15,7 +15,9 @@ const Button: FC<ButtonProps> = ({
         variant === "secondary" &&
           "bg-secondary text-white cursor-pointer hover:bg-blue-700",
         variant === "tertiary" &&
-          "bg-tertiary text-black cursor-pointer hover:bg-gray-700",
+          "bg-tertiary text-white cursor-pointer hover:bg-gray-700",
+        variant === "disabled" &&
+          "bg-gray-300 text-gray-500 cursor-not-allowed",
         className
       )}
       {...props}
