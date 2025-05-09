@@ -1,0 +1,89 @@
+import useRegister from "../model/useRegister";
+import { useState } from "react";
+import Input from "@/shared/ui/Input/Input";
+import Button from "@/shared/ui/Button/Button";
+import PasswordChecklist from "react-password-checklist";
+
+export default function RegisterPage() {
+  const { submit, error, loading } = useRegister();
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    submit(email, username, password);
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col items-center gap-4 w-full max-w-[450px]"
+    >
+      <Input
+        type="text"
+        name="username"
+        placeholder="Nom d'utilisateur"
+        classNameParent="w-full"
+        onChange={(e) => setUsername(e.target.value)}
+        disabled={loading}
+        required
+      />
+      <Input
+        type="email"
+        name="email"
+        placeholder="Email"
+        classNameParent="w-full"
+        onChange={(e) => setEmail(e.target.value)}
+        disabled={loading}
+        required
+      />
+      <Input
+        type="password"
+        name="password"
+        placeholder="Mot de passe"
+        classNameParent="w-full"
+        onChange={(e) => setPassword(e.target.value)}
+        disabled={loading}
+        required
+      />
+      <Input
+        type="password"
+        name="confirmPassword"
+        placeholder="Confirmer le mot de passe"
+        classNameParent="w-full"
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        disabled={loading}
+        required
+      />
+      <div className="text-xs">
+        <PasswordChecklist
+          rules={["minLength", "specialChar", "number", "capital", "match"]}
+          minLength={8}
+          value={password}
+          valueAgain={confirmPassword}
+          onChange={(isValid) => setIsPasswordValid(isValid)}
+          messages={{
+            minLength: "Le mot de passe doit avoir au moins 8 caractères.",
+            specialChar:
+              "Le mot de passe doit contenir au moins un caractère spécial.",
+            number: "Le mot de passe doit contenir au moins un chiffre.",
+            capital: "Le mot de passe doit contenir au moins une majuscule.",
+            match: "Les mots de passe ne sont pas identiques.",
+          }}
+        />
+      </div>
+      <Button
+        type="submit"
+        variant={loading || !isPasswordValid ? "disabled" : "secondary"}
+        className="w-[300px] max-w-full mt-3"
+        disabled={loading || !isPasswordValid}
+      >
+        {loading ? "Inscription en cours..." : "Inscription"}
+      </Button>
+      {error && <p className="text-red-500">{error}</p>}
+    </form>
+  );
+}
