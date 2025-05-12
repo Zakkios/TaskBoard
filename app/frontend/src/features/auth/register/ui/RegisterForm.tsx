@@ -14,7 +14,7 @@ export default function RegisterPage() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    submit(email, username, password);
+    submit(email, username, password, confirmPassword);
   };
 
   return (
