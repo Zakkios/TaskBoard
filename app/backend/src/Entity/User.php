@@ -4,26 +4,48 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use App\Controller\MeController;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ApiResource(
+    operations: [
+        new Get(
+            controller: MeController::class,
+            name: 'me',
+            extraProperties: [
+                'openapi_context' => [
+                    'summary' => 'Récupère les informations de l\'utilisateur connecté',
+                    'description' => 'Retourne les informations de l\'utilisateur actuellement authentifié',
+                ],
+            ],
+            normalizationContext: ['groups' => ['read:User']]
+        )
+    ]
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', length: 36, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'Ramsey\\Uuid\\Doctrine\\UuidGenerator')]
+    #[Groups(['read:User', 'read'])]
     private ?UuidInterface $id = null;
 
     #[ORM\Column(length: 150, unique: true)]
+    #[Groups(['read:User', 'read'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 100, unique: true)]
+    #[Groups(['read:User', 'read'])]
     private ?string $username = null;
 
     /**
