@@ -15,7 +15,7 @@ class RegisterUserInput
 
     #[Assert\NotBlank]
     #[Assert\Length(min: 8, minMessage: "Le mot de passe doit contenir au moins {{ limit }} caractères.")]
-    #[Assert\Length(max: 255, maxMessage: "Le mot de passe ne doit pas dépasser {{ limit }} caractères.")]
+    #[Assert\Length(max: 72, maxMessage: "Le mot de passe ne doit pas dépasser {{ limit }} caractères.")]
     #[Assert\Regex(pattern: '/[A-Z]/', message: "Le mot de passe doit contenir au moins une lettre majuscule.")]
     #[Assert\Regex(pattern: '/[a-z]/', message: "Le mot de passe doit contenir au moins une lettre minuscule.")]
     #[Assert\Regex(pattern: '/[0-9]/', message: "Le mot de passe doit contenir au moins un chiffre.")]
@@ -25,7 +25,7 @@ class RegisterUserInput
 
     #[Assert\NotBlank]
     #[Assert\Length(min: 3, minMessage: "Le nom d'utilisateur doit contenir au moins {{ limit }} caractères.")]
-    #[Assert\Length(max: 100, maxMessage: "Le nom d'utilisateur ne doit pas dépasser {{ limit }} caractères.")]
-    #[Assert\Regex(pattern: '/^[a-zA-Z0-9_]+$/', message: "Le nom d'utilisateur ne doit contenir que des lettres, des chiffres et des underscores.")]
+    #[Assert\Length(max: 30, maxMessage: "Le nom d'utilisateur ne doit pas dépasser {{ limit }} caractères.")]
+    #[Assert\Regex(pattern: '/^[a-zA-Z0-9._-]+$/', message: "Le nom d'utilisateur ne doit contenir que caractères autorisés : lettres, chiffres, ., -, _")]
     public string $username;
 }
