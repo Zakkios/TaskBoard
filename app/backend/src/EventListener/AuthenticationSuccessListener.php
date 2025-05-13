@@ -14,14 +14,16 @@ class AuthenticationSuccessListener
     {
         $data = $event->getData();
         $response = $event->getResponse();
+        $domain = $_ENV['JWT_DOMAIN'] ?? 'localhost';
+        $secure = $_ENV['JWT_SECURE'] ?? false;
 
         $cookie = new Cookie(
             'jwt',
             $data['token'],
             (new \DateTime('+1 hour'))->format('D, d M Y H:i:s T'),
             '/',
-            'localhost',
-            true,
+            $domain,
+            $secure,
             true,
             false,
             'strict'
