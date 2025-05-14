@@ -14,8 +14,8 @@ class AuthenticationSuccessListener
     {
         $data = $event->getData();
         $response = $event->getResponse();
-        $domain = $_ENV['JWT_DOMAIN'] ?? 'localhost';
-        $secure = $_ENV['JWT_SECURE'] ?? false;
+        $domain = $_ENV['JWT_DOMAIN'];
+        $secure = $_ENV['JWT_SECURE'];
 
         $cookie = new Cookie(
             'jwt',
