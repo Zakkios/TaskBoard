@@ -3,6 +3,7 @@ import { useState } from "react";
 import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
 import PasswordChecklist from "react-password-checklist";
+import Loader from "@/shared/ui/Loader/Loader";
 
 export default function RegisterPage() {
   const { submit, error, loading } = useRegister();
@@ -22,6 +23,7 @@ export default function RegisterPage() {
       onSubmit={handleSubmit}
       className="flex flex-col items-center gap-4 w-full max-w-[450px]"
     >
+      {loading && <Loader />}
       <Input
         type="text"
         name="username"

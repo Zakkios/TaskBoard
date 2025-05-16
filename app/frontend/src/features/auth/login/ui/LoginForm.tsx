@@ -2,6 +2,7 @@ import useLogin from "@/features/auth/login/model/useLogin";
 import { useState } from "react";
 import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
+import Loader from "@/shared/ui/Loader/Loader";
 
 export default function LoginPage() {
   const { submit, error, loading } = useLogin();
@@ -18,6 +19,7 @@ export default function LoginPage() {
       onSubmit={handleSubmit}
       className="flex flex-col items-center gap-4 w-full max-w-[450px]"
     >
+      {loading && <Loader />}
       <Input
         type="email"
         name="email"
