@@ -22,8 +22,8 @@ class Tag
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 10)]
-    private ?string $color = null;
+    #[ORM\Column(length: 6, nullable: false)]
+    private string $color = '000000';
 
     /**
      * @var Collection<int, Task>
@@ -57,7 +57,7 @@ class Tag
         return $this;
     }
 
-    public function getColor(): ?string
+    public function getColor(): string
     {
         return $this->color;
     }

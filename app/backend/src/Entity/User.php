@@ -107,9 +107,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
+     * @return string
      */
     public function getUserIdentifier(): string
     {
@@ -117,13 +115,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @see UserInterface
-     *
      * @return list<string>
      */
     public function getRoles(): array
     {
-        return array_unique(array_merge($this->roles, ['ROLE_USER']));
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+        return array_values(array_unique($roles));
     }
 
 

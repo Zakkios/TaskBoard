@@ -27,12 +27,16 @@ class AuthenticationSuccessListener
             return;
         }
 
+        $value = $data['token'];
+        if (!is_string($value)) {
+            return;
+        }
         $response = $event->getResponse();
         $response->headers->clearCookie('jwt');
 
         $cookie = new Cookie(
             'jwt',
-            $data['token'],
+            $value,
             (new \DateTime('+1 hour'))->format('D, d M Y H:i:s T'),
             '/',
             $this->cookieDomain,

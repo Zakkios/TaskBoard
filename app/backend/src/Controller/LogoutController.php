@@ -18,7 +18,7 @@ class LogoutController extends AbstractController
         RefreshTokenManagerInterface $rtManager
     ): JsonResponse {
         $refreshTokenString = $request->cookies->get('refresh_token');
-        if ($refreshTokenString) {
+        if (is_string($refreshTokenString) && $refreshTokenString !== '') {
             $rt = $rtManager->get($refreshTokenString);
             if ($rt) {
                 $rtManager->delete($rt);
