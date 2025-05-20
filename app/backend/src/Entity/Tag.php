@@ -9,15 +9,17 @@ use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\UuidInterface;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 #[ApiResource]
 class Tag
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: 'uuid', length: 36, unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: 'Ramsey\\Uuid\\Doctrine\\UuidGenerator')]
+    private ?UuidInterface $id = null;
 
     #[ORM\Column(length: 50)]
     private ?string $name = null;
@@ -29,18 +31,18 @@ class Tag
      * @var Collection<int, Task>
      */
     #[ORM\ManyToMany(targetEntity: Task::class, inversedBy: 'tags')]
-    private Collection $Task;
+    private Collection $tasks;
 
     #[ORM\ManyToOne(inversedBy: 'tags')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $User = null;
+    private ?User $user = null;
 
     public function __construct()
     {
-        $this->Task = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?UuidInterface
     {
         return $this->id;
     }
@@ -72,15 +74,15 @@ class Tag
     /**
      * @return Collection<int, Task>
      */
-    public function getTask(): Collection
+    public function getTasks(): Collection
     {
-        return $this->Task;
+        return $this->tasks;
     }
 
     public function addTask(Task $task): static
     {
-        if (!$this->Task->contains($task)) {
-            $this->Task->add($task);
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
         }
 
         return $this;
@@ -88,19 +90,19 @@ class Tag
 
     public function removeTask(Task $task): static
     {
-        $this->Task->removeElement($task);
+        $this->tasks->removeElement($task);
 
         return $this;
     }
 
     public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
-    public function setUser(?User $User): static
+    public function setUser(?User $user): static
     {
-        $this->User = $User;
+        $this->user = $user;
 
         return $this;
     }
