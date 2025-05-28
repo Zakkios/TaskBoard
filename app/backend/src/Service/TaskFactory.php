@@ -6,7 +6,7 @@ namespace App\Service;
 
 use App\Dto\TaskInput;
 use App\Entity\Task;
-use App\Enum\TaskStatus;
+use App\Enum\StatusEnum;
 use App\Repository\TagRepository;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -49,10 +49,10 @@ class TaskFactory
         $task->setDescription($taskInput->description ?? null);
 
         $status = $taskInput->status;
-        if (!TaskStatus::tryFrom($status)) {
-            $status = TaskStatus::TODO->value;
+        if (!StatusEnum::tryFrom($status)) {
+            $status = StatusEnum::TODO->value;
         }
-        $task->setStatus(TaskStatus::from($status));
+        $task->setStatus(StatusEnum::from($status));
 
         $task->clearTags();
         foreach ($taskInput->tags as $tagId) {
