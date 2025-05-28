@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Dto\TaskInput;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Repository\TaskRepository;
@@ -14,8 +13,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Validator\ConstraintViolationInterface;
 
 class TaskController extends AbstractController
 {
@@ -24,7 +21,7 @@ class TaskController extends AbstractController
         private readonly TaskFactory $taskFactory,
     ) {}
 
-    #[Route('/api/tasks', name: 'api_tasks', methods: ['GET'])]
+    #[Route('/api/tasks', name: 'api_get_user_tasks', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
     public function getTasksByUserId(): JsonResponse
     {
@@ -67,9 +64,43 @@ class TaskController extends AbstractController
         );
     }
 
+    #[Route('/api/task/{taskId}', name: 'api_get_task', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
+    public function getTasksById(Request $request): JsonResponse
+    {
+        $taskId = $request->attributes->get('taskId');
+        $task = $this->taskRepository->find($taskId);
+        if (null === $task) {
+            return new JsonResponse(
+                [
+                    'message' => 'La tâche n\'existe pas.',
+                ],
+                JsonResponse::HTTP_NOT_FOUND
+            );
+        }
+
+        return new JsonResponse(
+            [
+                'task' => [
+                    'id' => $task->getId(),
+                    'title' => $task->getTitle(),
+                    'description' => $task->getDescription(),
+                    'status' => $task->getStatus(),
+                    'created_at' => $task->getCreatedAt()->format('Y-m-d H:i:s'),
+                    'updated_at' => $task->getUpdatedAt()->format('Y-m-d H:i:s'),
+                    'tags' => array_map(fn($tag) => [
+                        'id' => $tag->getId(),
+                        'name' => $tag->getName(),
+                        'color' => $tag->getColor(),
+                    ], $task->getTags()->toArray())
+                ]
+            ]
+        );
+    }
+
     #[Route('/api/tasks', name: 'api_tasks_create', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
-    public function createTask(Request $request, ValidatorInterface $validator): JsonResponse
+    public function createTask(Request $request): JsonResponse
     {
         /**
          * @var array{
