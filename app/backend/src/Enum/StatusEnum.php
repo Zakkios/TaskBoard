@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Enum;
 
-enum TaskStatus: string
+enum StatusEnum: string
 {
     case TODO = 'todo';
     case DOING = 'doing';

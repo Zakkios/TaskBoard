@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Enum\TaskStatus;
+use App\Enum\StatusEnum;
 use App\Repository\TaskRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -27,8 +27,8 @@ class Task
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(enumType: TaskStatus::class, type: Types::STRING)]
-    private TaskStatus $status = TaskStatus::TODO;
+    #[ORM\Column(enumType: StatusEnum::class, type: Types::STRING)]
+    private StatusEnum $status = StatusEnum::TODO;
 
     #[ORM\Column(nullable: false)]
     private \DateTimeImmutable $created_at;
@@ -82,12 +82,12 @@ class Task
         return $this;
     }
 
-    public function getStatus(): TaskStatus
+    public function getStatus(): StatusEnum
     {
         return $this->status;
     }
 
-    public function setStatus(TaskStatus $status): static
+    public function setStatus(StatusEnum $status): static
     {
         $this->status = $status;
         return $this;
