@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { register } from "@/features/auth/register/api/register";
+import { register } from "@/features/auth/register/api/register.api";
 import { useNavigate } from "react-router";
 import { registerSchema } from "./registerSchema";
 
