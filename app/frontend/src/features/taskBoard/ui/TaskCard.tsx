@@ -10,11 +10,14 @@ interface TaskCardProps {
 const TaskCard: React.FC<TaskCardProps> = ({ task }) => (
   <div className="bg-white rounded-2xl p-4 mb-4 max-h-60">
     <div className="flex justify-between">
-      <div className="tags">
+      <div className="flex flex-wrap">
         {task.tags.map((tag) => (
-          <span key={tag} className={`tag tag-${tag.toLowerCase()}`}>
-            {tag}
-          </span>
+          <p
+            key={tag.id}
+            className={`text-${tag.color} bg-${tag.color}/25 p-1 rounded mr-1 my-1`}
+          >
+            {tag.name}
+          </p>
         ))}
       </div>
       <div>
