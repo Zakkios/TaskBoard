@@ -34,7 +34,7 @@ export default function TaskBoard({ columns: initialColumns }: TaskBoardProps) {
         <TaskColumn
           key={column.id}
           column={column}
-          className="bg-light-gray rounded-3xl shadow-sm p-8 min-h-[85vh]"
+          className="bg-light-gray rounded-3xl p-8 min-h-[85vh]"
         />
       ))}
     </div>
