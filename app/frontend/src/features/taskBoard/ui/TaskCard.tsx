@@ -14,7 +14,11 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => (
         {task.tags.map((tag) => (
           <p
             key={tag.id}
-            className={`text-${tag.color} bg-${tag.color}/25 p-1 rounded mr-1 my-1`}
+            className="px-1 rounded mr-1 my-1"
+            style={{
+              color: `#${tag.color}`,
+              backgroundColor: `#${tag.color}20`,
+            }}
           >
             {tag.name}
           </p>
