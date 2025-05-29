@@ -21,7 +21,7 @@ class TaskController extends AbstractController
         private readonly TaskFactory $taskFactory,
     ) {}
 
-    #[Route('/api/tasks', name: 'api_get_user_tasks', methods: ['GET'])]
+    #[Route('/api/tasks', name: 'api_tasks_by_user', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
     public function getTasksByUserId(): JsonResponse
     {
@@ -34,7 +34,7 @@ class TaskController extends AbstractController
         }
 
         /** @var Task[] $tasks */
-        $tasks = $this->taskRepository->findTasksByUserId($user->getId());
+        $tasks = $this->taskRepository->findByUserId($user->getId());
         if (empty($tasks)) {
             return new JsonResponse(
                 [
@@ -64,7 +64,7 @@ class TaskController extends AbstractController
         );
     }
 
-    #[Route('/api/task/{taskId}', name: 'api_get_task', methods: ['GET'])]
+    #[Route('/api/tasks/{taskId}', name: 'api_tasks_get', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
     public function getTasksById(Request $request): JsonResponse
     {

@@ -20,7 +20,7 @@ class TaskRepository extends ServiceEntityRepository
     /**
      * @return array<Task> | null
      */
-    public function findTasksByUserId(UuidInterface $userId): ?array
+    public function findByUserId(UuidInterface $userId): ?array
     {
         /** @var array<Task> | null $result */
         $result = $this->createQueryBuilder('t')
@@ -32,8 +32,6 @@ class TaskRepository extends ServiceEntityRepository
 
         return $result;
     }
-
-
 
     public function save(Task $task): void
     {
