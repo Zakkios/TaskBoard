@@ -1,3 +1,5 @@
+import { Tag } from "./Tags";
+
 export type TaskStatus = "todo" | "doing" | "done";
 
 export interface Task {
@@ -5,13 +7,6 @@ export interface Task {
   title: string;
   description: string;
   status: TaskStatus;
-  tags: string[];
+  tags: Tag[];
   updatedAt: string;
-}
-
-export interface Column {
-  id: TaskStatus;
-  title: string;
-  color: string;
-  tasks: Task[];
 }

@@ -1,7 +1,7 @@
 import React from "react";
-import { Column } from "@/features/taskBoard/model/Task";
-import TaskCard from "@/features/taskBoard/ui/TaskCard";
 import clsx from "clsx";
+import { Column } from "@/features/taskBoard/model/Columns";
+import TaskCard from "@/features/taskBoard/ui/TaskCard";
 import colorMap from "@/shared/lib/theme/colorMap";
 
 interface TaskColumnProps {
