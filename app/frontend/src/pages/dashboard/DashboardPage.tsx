@@ -16,7 +16,7 @@ export default function DashboardPage() {
     <div>
       <Topbar user={user} />
       <Sidebar />
-      <div className="ml-80 pt-28">
+      <div className="ml-20 md:ml-80 pt-28">
         <TaskBoard columns={COLUMNS} />
       </div>
     </div>

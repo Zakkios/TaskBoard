@@ -15,49 +15,71 @@ export default function Sidebar() {
   }
 
   return (
+    // Wrapper responsive
     <div>
+      {/* Logo */}
       <NavLink to="/">
         <img
           src={Logo}
           alt="logo"
-          className="fixed top-4 left-24 w-[80px] z-50"
+          className="fixed top-5 left-3 w-14 z-50 md:left-24 md:top-4 md:w-[80px]"
         />
       </NavLink>
-      <div className="fixed left-72 top-0 border-r border-tertiary h-full"></div>
-      <div className="fixed flex h-full justify-between flex-col">
-        <div className="mt-24 w-[18rem] px-4 ">
-          <NavLink to="/">
-            {" "}
+      <div className="fixed left-20 md:left-72 top-0 border-r border-tertiary h-full transition-all z-50"></div>
+
+      {/* Sidebar container */}
+      <div
+        className="
+        fixed flex flex-col justify-between h-full
+        bg-white
+        w-20 px-4
+        md:w-[18rem]
+        transition-all
+      "
+      >
+        {/* Navigation items */}
+        <div className="mt-24 flex flex-col gap-3 items-center md:items-stretch">
+          <NavLink to="/" className="w-full">
             <Button
               variant={
                 location.pathname === "/" ? "nav-item-active" : "nav-item"
               }
-              className="flex items-center gap-2 mt-8 mb-3 w-full"
+              className="flex flex-col items-center gap-1 w-full md:flex-row md:gap-2 mt-8"
             >
-              <GoHomeFill size="22" /> Tableau des tâches
+              <GoHomeFill size="22" />
+              <span className="text-xs md:text-base md:inline hidden">
+                Tableau des tâches
+              </span>
             </Button>
           </NavLink>
-          <NavLink to="/statistics">
-            {" "}
+          <NavLink to="/statistics" className="w-full">
             <Button
               variant={
                 location.pathname === "/statistics"
                   ? "nav-item-active"
                   : "nav-item"
               }
-              className="flex items-center gap-2 mb-3 w-full"
+              className="flex flex-col items-center gap-1 w-full md:flex-row md:gap-2"
             >
-              <BiSolidBarChartSquare size="22" /> Statistiques
+              <BiSolidBarChartSquare size="22" />
+              <span className="text-xs md:text-base md:inline hidden">
+                Statistiques
+              </span>
             </Button>
           </NavLink>
         </div>
-        <div className="w-[18rem] px-4 ">
+
+        {/* Logout */}
+        <div className="mb-4 flex flex-col items-center md:items-stretch">
           <Button
             variant="nav-item"
-            className="flex items-center gap-2 mb-3 w-full"
+            className="flex flex-col items-center gap-1 w-full md:flex-row md:gap-2"
             onClick={handleLogout}
           >
-            <IoLogOut size="22" /> Déconnexion
+            <IoLogOut size="22" />
+            <span className="text-xs md:text-base md:inline hidden">
+              Déconnexion
+            </span>
           </Button>
         </div>
       </div>

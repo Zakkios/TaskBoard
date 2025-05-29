@@ -6,7 +6,7 @@ type TopbarProps = { user: User | null };
 
 export default function Topbar({ user }: TopbarProps) {
   return (
-    <div className="fixed flex justify-end items-center bg-black h-24 w-full">
+    <div className="fixed flex justify-end items-center bg-black h-24 w-full z-20">
       <div>
         <Button
           variant="dark-gray"
