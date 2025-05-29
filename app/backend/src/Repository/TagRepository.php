@@ -17,15 +17,31 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
-    public function findTagById(UuidInterface $tagId): ?Tag
+    /**
+     * @return array<Tag> | null
+     */
+    public function findByUserId(UuidInterface $userId): ?array
     {
-        /** @var Tag|null $result */
+        /** @var array<Tag> | null $result */
         $result = $this->createQueryBuilder('t')
-            ->andWhere('t.id = :tagId')
-            ->setParameter('tagId', $tagId)
+            ->andWhere('t.user = :userId')
+            ->setParameter('userId', $userId)
+            ->orderBy('t.name', 'ASC')
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
 
         return $result;
+    }
+
+    public function save(Tag $tag): void
+    {
+        $this->getEntityManager()->persist($tag);
+        $this->getEntityManager()->flush();
+    }
+
+    public function remove(Tag $tag): void
+    {
+        $this->getEntityManager()->remove($tag);
+        $this->getEntityManager()->flush();
     }
 }

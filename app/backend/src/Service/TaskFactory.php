@@ -56,7 +56,7 @@ class TaskFactory
 
         $task->clearTags();
         foreach ($taskInput->tags as $tagId) {
-            $tagEntity = $this->tagRepository->findTagById(Uuid::fromString($tagId));
+            $tagEntity = $this->tagRepository->find($tagId);
             if (null === $tagEntity) {
                 return new JsonResponse(
                     [
