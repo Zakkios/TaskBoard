@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
-#[ApiResource]
 class Tag
 {
     #[ORM\Id]
@@ -21,7 +19,7 @@ class Tag
     #[ORM\CustomIdGenerator(class: 'Ramsey\\Uuid\\Doctrine\\UuidGenerator')]
     private ?UuidInterface $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 15, nullable: false)]
     private ?string $name = null;
 
     #[ORM\Column(length: 6, nullable: false)]
