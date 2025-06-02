@@ -1,27 +1,22 @@
 import api from "@/shared/api/api";
-import { Task } from "@/features/taskBoard/model/Task";
+import { Task, TaskFormData } from "@/features/taskBoard/model/Task";
 
-export const getTasks = async () => {
+export const getTasks = async (): Promise<Task[]> => {
   const response = await api.get(`/tasks`);
   return response.data.tasks;
 };
 
-export const getTaskById = async (taskId: string) => {
+export const getTaskById = async (taskId: string): Promise<Task> => {
   const response = await api.get(`/tasks/${taskId}`);
   return response.data.task;
 };
 
-export const createTask = async (
-  task: Omit<Task, "id" | "createdAt" | "updatedAt">
-) => {
+export const createTask = async (task: TaskFormData) => {
   const response = await api.post(`/tasks`, task);
   return response.data;
 };
 
-export const updateTask = async (
-  taskId: string,
-  task: Omit<Task, "id" | "createdAt" | "updatedAt">
-) => {
+export const updateTask = async (taskId: string, task: TaskFormData) => {
   const response = await api.put(`/tasks/${taskId}`, task);
   return response.data;
 };
