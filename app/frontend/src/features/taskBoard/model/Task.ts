@@ -10,3 +10,7 @@ export interface Task {
   tags: Tag[];
   updatedAt: string;
 }
+
+export type TaskFormData = Omit<Task, "id" | "updatedAt" | "tags"> & {
+  tags: string[];
+};
