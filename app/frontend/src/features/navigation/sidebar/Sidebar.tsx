@@ -22,10 +22,10 @@ export default function Sidebar() {
         <img
           src={Logo}
           alt="logo"
-          className="fixed top-5 left-3 w-14 z-50 md:left-24 md:top-4 md:w-[80px]"
+          className="fixed top-5 left-3 w-14 z-20 md:left-24 md:top-4 md:w-[80px]"
         />
       </NavLink>
-      <div className="fixed left-20 md:left-72 top-0 border-r border-tertiary h-full transition-all z-50"></div>
+      <div className="fixed left-20 md:left-72 top-0 border-r border-tertiary h-full transition-all z-20"></div>
 
       {/* Sidebar container */}
       <div
