@@ -15,7 +15,7 @@ const COLUMNS = [
   },
   {
     id: "done" as TaskStatus,
-    title: "Terminées",
+    title: "Terminé",
     color: "green",
     tasks: [],
   },
