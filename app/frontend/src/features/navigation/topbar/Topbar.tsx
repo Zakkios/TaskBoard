@@ -8,10 +8,7 @@ export default function Topbar({ user }: TopbarProps) {
   return (
     <div className="fixed flex justify-end items-center bg-black h-24 w-full z-20">
       <div>
-        <Button
-          variant="dark-gray"
-          className="flex items-center gap-2 py-2 px-5 mr-8 rounded-4xl"
-        >
+        <Button variant="dark-gray">
           {user?.username || "Guest"}
           <FaUser />
         </Button>
