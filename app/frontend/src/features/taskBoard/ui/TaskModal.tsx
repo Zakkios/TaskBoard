@@ -4,7 +4,7 @@ import Modal from "@/shared/ui/Modal/Modal";
 import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
 import reactSelectCustomStyles from "@/shared/lib/theme/reactSelectCustomStyles";
-import COLUMNS from "@/features/taskBoard/config/columns";
+import COLUMNS from "@/features/taskBoard/consts/columns";
 import { Tag } from "@/features/taskBoard/model/Tags";
 import { TaskStatus } from "@/features/taskBoard/model/Task";
 
@@ -18,6 +18,11 @@ interface TaskModalProps {
   setDescription: Dispatch<SetStateAction<string>>;
   setStatus: Dispatch<SetStateAction<TaskStatus>>;
   setTagsIds: Dispatch<SetStateAction<string[]>>;
+  taskId?: string;
+  title?: string;
+  description?: string;
+  status?: TaskStatus;
+  tagsIds?: string[];
 }
 
 export default function TaskModal({
@@ -30,6 +35,11 @@ export default function TaskModal({
   setDescription,
   setStatus,
   setTagsIds,
+  taskId = "",
+  title = "",
+  description = "",
+  status = "todo",
+  tagsIds = [],
 }: TaskModalProps) {
   return (
     <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
@@ -37,6 +47,7 @@ export default function TaskModal({
         <Input
           type="text"
           name="title"
+          value={title}
           placeholder="Titre de la tâche"
           classNameParent="w-full"
           className="mb-3"
@@ -47,6 +58,7 @@ export default function TaskModal({
         <textarea
           name="description"
           placeholder="Description de la tâche"
+          value={description}
           className="w-full h-32 p-2 border border-gray-400 bg-white rounded-lg mb-3 focus:outline-none focus:ring-1 focus:ring-gray-500"
           onChange={(e) => setDescription(e.target.value)}
           disabled={loading}
@@ -96,6 +108,15 @@ export default function TaskModal({
                 return;
               }
             }}
+            value={tags
+              .map((tag) => {
+                return {
+                  value: tag.id,
+                  label: tag.name,
+                  color: tag.color,
+                };
+              })
+              .filter((tag) => tagsIds.includes(tag.value))}
           />
         </label>
         <Button
@@ -104,8 +125,19 @@ export default function TaskModal({
           className=""
           disabled={loading}
         >
-          {loading ? "Ajout de la tâche..." : "Ajouter"}
+          {loading
+            ? "Chargement..."
+            : taskId
+            ? "Modifier la tâche"
+            : "Ajouter une tâche"}
         </Button>
+        <Input
+          type="hidden"
+          name="taskId"
+          value={taskId}
+          classNameParent="hidden"
+          className="hidden"
+        />
       </form>
     </Modal>
   );

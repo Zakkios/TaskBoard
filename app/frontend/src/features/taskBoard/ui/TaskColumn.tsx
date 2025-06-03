@@ -8,12 +8,16 @@ import {
   TaskStatus,
   TaskFormData,
 } from "@/features/taskBoard/model/Task";
-import { getTags } from "../api/tag.api";
+import { getTags } from "@/features/taskBoard/api/tag.api";
 import { Tag } from "../model/Tags";
 import clsx from "clsx";
-import { createTask } from "../api/task.api";
+import { createTask, updateTask } from "../api/task.api";
 import TaskModal from "./TaskModal";
 import { GoPlus } from "react-icons/go";
+import {
+  closeModal,
+  openCreateTaskModal,
+} from "@/features/taskBoard/lib/handleTaskModal";
 
 interface TaskColumnProps {
   column: Column;
@@ -33,6 +37,16 @@ export default function TaskColumn({
   const [description, setDescription] = useState<string>("");
   const [status, setStatus] = useState<TaskStatus>("todo");
   const [tagsIds, setTagsIds] = useState<string[]>([]);
+  const [taskId, setTaskId] = useState<string>("");
+
+  const editTaskModalProps = {
+    setIsModalOpen,
+    setStatus,
+    setTitle,
+    setDescription,
+    setTagsIds,
+    setTaskId,
+  };
 
   const fetchTags = useCallback(async () => {
     try {
@@ -47,19 +61,6 @@ export default function TaskColumn({
     fetchTags();
   }, [fetchTags]);
 
-  function openModal(): void {
-    setIsModalOpen(true);
-    setStatus(column.id);
-  }
-
-  function closeModal(): void {
-    setIsModalOpen(false);
-    setTitle("");
-    setDescription("");
-    setStatus(status);
-    setTagsIds([]);
-  }
-
   const addTask = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
@@ -69,18 +70,40 @@ export default function TaskColumn({
       status: status,
       tags: tagsIds,
     };
+
+    if (taskId !== "") {
+      try {
+        await updateTask(taskId, task);
+        refreshTasks();
+        closeModal({
+          setIsModalOpen,
+          setTitle,
+          setDescription,
+          setStatus,
+          setTagsIds,
+          setTaskId,
+          setLoading,
+        });
+      } catch (error) {
+        console.error("Error updating task:", error);
+      }
+      return;
+    }
+
     try {
       await createTask(task);
       refreshTasks();
-      closeModal();
-      setTitle("");
-      setDescription("");
-      setStatus("todo");
-      setTagsIds([]);
+      closeModal({
+        setIsModalOpen,
+        setTitle,
+        setDescription,
+        setStatus,
+        setTagsIds,
+        setTaskId,
+        setLoading,
+      });
     } catch (error) {
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -98,13 +121,24 @@ export default function TaskColumn({
       <div className="border-2 rounded-full my-5 border-secondary"></div>
       <div>
         {column.tasks.map((task: Task) => (
-          <TaskCard key={task.id} task={task} />
+          <TaskCard
+            key={task.id}
+            task={task}
+            refreshTasks={refreshTasks}
+            editTaskModalProps={editTaskModalProps}
+          />
         ))}
       </div>
       <div className="justify-center flex">
         <Button
           variant="nav-item"
-          onClick={openModal}
+          onClick={() =>
+            openCreateTaskModal({
+              setIsModalOpen,
+              setStatus,
+              columnId: column.id,
+            })
+          }
           disabled={loading}
           className="flex items-center gap-2"
         >
@@ -113,7 +147,17 @@ export default function TaskColumn({
       </div>
       <TaskModal
         isModalOpen={isModalOpen}
-        closeModal={closeModal}
+        closeModal={() => {
+          closeModal({
+            setIsModalOpen,
+            setTitle,
+            setDescription,
+            setStatus,
+            setTagsIds,
+            setTaskId,
+            setLoading,
+          });
+        }}
         addTask={addTask}
         tags={tags}
         loading={loading}
@@ -121,6 +165,11 @@ export default function TaskColumn({
         setDescription={setDescription}
         setStatus={setStatus}
         setTagsIds={setTagsIds}
+        taskId={taskId}
+        title={title}
+        description={description}
+        status={status}
+        tagsIds={tagsIds}
       />
     </div>
   );
