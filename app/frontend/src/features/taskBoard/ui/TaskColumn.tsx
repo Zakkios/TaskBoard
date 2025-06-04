@@ -1,43 +1,41 @@
-import { useCallback, useEffect, useState } from "react";
+import clsx from "clsx";
+import { useState } from "react";
+import { GoPlus } from "react-icons/go";
 import { Column } from "@/features/taskBoard/model/Columns";
 import TaskCard from "@/features/taskBoard/ui/TaskCard";
 import colorMap from "@/shared/lib/theme/colorMap";
 import Button from "@/shared/ui/Button/Button";
-import {
-  Task,
-  TaskStatus,
-  TaskFormData,
-} from "@/features/taskBoard/model/Task";
-import { getTags } from "@/features/taskBoard/api/tag.api";
-import { Tag } from "../model/Tags";
-import clsx from "clsx";
-import { createTask, updateTask } from "../api/task.api";
-import TaskModal from "./TaskModal";
-import { GoPlus } from "react-icons/go";
+import { Task, TaskStatus } from "@/features/taskBoard/model/Task";
+import { Tag } from "@/features/taskBoard/model/Tag";
+import useTask from "@/features/taskBoard/model/useTask";
+import TaskModal from "@/features/taskBoard/ui/TaskModal";
 import {
   closeModal,
   openCreateTaskModal,
 } from "@/features/taskBoard/lib/handleTaskModal";
+import { useLoader } from "@/shared/ui/Loader/useLoader";
 
 interface TaskColumnProps {
   column: Column;
   className?: string;
   refreshTasks: () => void;
+  tags: Tag[];
 }
 
 export default function TaskColumn({
   column,
   className,
   refreshTasks,
+  tags,
 }: TaskColumnProps) {
+  const { submit, error, setError } = useTask();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [tags, setTags] = useState<Tag[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [status, setStatus] = useState<TaskStatus>("todo");
   const [tagsIds, setTagsIds] = useState<string[]>([]);
   const [taskId, setTaskId] = useState<string>("");
+  const { hide } = useLoader();
 
   const editTaskModalProps = {
     setIsModalOpen,
@@ -46,65 +44,6 @@ export default function TaskColumn({
     setDescription,
     setTagsIds,
     setTaskId,
-  };
-
-  const fetchTags = useCallback(async () => {
-    try {
-      const newTags = await getTags();
-      setTags(newTags);
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchTags();
-  }, [fetchTags]);
-
-  const addTask = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setLoading(true);
-    const task: TaskFormData = {
-      title: title,
-      description: description,
-      status: status,
-      tags: tagsIds,
-    };
-
-    if (taskId !== "") {
-      try {
-        await updateTask(taskId, task);
-        refreshTasks();
-        closeModal({
-          setIsModalOpen,
-          setTitle,
-          setDescription,
-          setStatus,
-          setTagsIds,
-          setTaskId,
-          setLoading,
-        });
-      } catch (error) {
-        console.error("Error updating task:", error);
-      }
-      return;
-    }
-
-    try {
-      await createTask(task);
-      refreshTasks();
-      closeModal({
-        setIsModalOpen,
-        setTitle,
-        setDescription,
-        setStatus,
-        setTagsIds,
-        setTaskId,
-        setLoading,
-      });
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   return (
@@ -139,7 +78,6 @@ export default function TaskColumn({
               columnId: column.id,
             })
           }
-          disabled={loading}
           className="flex items-center gap-2"
         >
           Ajouter une tâche <GoPlus />
@@ -155,12 +93,28 @@ export default function TaskColumn({
             setStatus,
             setTagsIds,
             setTaskId,
-            setLoading,
+            setError,
+            hide,
           });
         }}
-        addTask={addTask}
+        addTask={(e) => {
+          e.preventDefault();
+          submit(
+            title,
+            description,
+            status,
+            tagsIds,
+            taskId,
+            setIsModalOpen,
+            setTitle,
+            setDescription,
+            setStatus,
+            setTagsIds,
+            setTaskId,
+            refreshTasks
+          );
+        }}
         tags={tags}
-        loading={loading}
         setTitle={setTitle}
         setDescription={setDescription}
         setStatus={setStatus}
@@ -170,6 +124,7 @@ export default function TaskColumn({
         description={description}
         status={status}
         tagsIds={tagsIds}
+        error={error ?? undefined}
       />
     </div>
   );
