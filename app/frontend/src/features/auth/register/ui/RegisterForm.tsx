@@ -1,12 +1,11 @@
-import useRegister from "../model/useRegister";
 import { useState } from "react";
+import PasswordChecklist from "react-password-checklist";
+import useRegister from "@/features/auth/register/model/useRegister";
 import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
-import PasswordChecklist from "react-password-checklist";
-import Loader from "@/shared/ui/Loader/Loader";
 
 export default function RegisterPage() {
-  const { submit, error, loading } = useRegister();
+  const { submit, error } = useRegister();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -23,14 +22,12 @@ export default function RegisterPage() {
       onSubmit={handleSubmit}
       className="flex flex-col items-center gap-4 w-full max-w-[450px]"
     >
-      {loading && <Loader />}
       <Input
         type="text"
         name="username"
         placeholder="Nom d'utilisateur"
         classNameParent="w-full"
         onChange={(e) => setUsername(e.target.value)}
-        disabled={loading}
         required
       />
       <Input
@@ -39,7 +36,6 @@ export default function RegisterPage() {
         placeholder="Email"
         classNameParent="w-full"
         onChange={(e) => setEmail(e.target.value)}
-        disabled={loading}
         required
       />
       <Input
@@ -48,7 +44,6 @@ export default function RegisterPage() {
         placeholder="Mot de passe"
         classNameParent="w-full"
         onChange={(e) => setPassword(e.target.value)}
-        disabled={loading}
         required
       />
       <Input
@@ -57,7 +52,6 @@ export default function RegisterPage() {
         placeholder="Confirmer le mot de passe"
         classNameParent="w-full"
         onChange={(e) => setConfirmPassword(e.target.value)}
-        disabled={loading}
         required
       />
       <div className="text-xs">
@@ -79,11 +73,11 @@ export default function RegisterPage() {
       </div>
       <Button
         type="submit"
-        variant={loading || !isPasswordValid ? "disabled" : "secondary"}
+        variant="secondary"
         className="w-[300px] max-w-full mt-3"
-        disabled={loading || !isPasswordValid}
+        disabled={!isPasswordValid}
       >
-        {loading ? "Inscription en cours..." : "Inscription"}
+        S'inscrire
       </Button>
       {error && <p className="text-red-500">{error}</p>}
     </form>

@@ -1,22 +1,23 @@
 import { useState } from "react";
 import { login } from "@/features/auth/login/api/login.api";
 import { useNavigate } from "react-router";
-import { loginSchema } from "./loginSchema";
+import { loginSchema } from "@/features/auth/login/model/loginSchema";
+import { useLoader } from "@/shared/ui/Loader/useLoader";
 
 export default function useLogin() {
-  const [loading, setLoading] = useState(false);
+  const { show, hide } = useLoader();
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const submit = async (email: string, password: string) => {
-    setLoading(true);
+    show();
     setError(null);
 
     const result = loginSchema.safeParse({ email, password });
     if (!result.success) {
       const message = result.error.errors[0]?.message || "Données invalides.";
       setError(message);
-      setLoading(false);
+      hide();
       return;
     }
 
@@ -27,9 +28,9 @@ export default function useLogin() {
       console.error(error);
       setError("Email ou mot de passe invalide");
     } finally {
-      setLoading(false);
+      hide();
     }
   };
 
-  return { submit, error, loading };
+  return { submit, error };
 }

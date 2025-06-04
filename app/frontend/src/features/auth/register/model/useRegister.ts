@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { register } from "@/features/auth/register/api/register.api";
 import { useNavigate } from "react-router";
-import { registerSchema } from "./registerSchema";
+import { register } from "@/features/auth/register/api/register.api";
+import { registerSchema } from "@/features/auth/register/model/registerSchema";
+import { useLoader } from "@/shared/ui/Loader/useLoader";
 
 export default function useRegister() {
-  const [loading, setLoading] = useState(false);
+  const { show, hide } = useLoader();
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ export default function useRegister() {
     password: string,
     confirmPassword: string
   ) => {
-    setLoading(true);
+    show();
     setError(null);
 
     const result = registerSchema.safeParse({
@@ -27,7 +28,7 @@ export default function useRegister() {
       const message = result.error.errors[0]?.message || "Données invalides.";
       console.log(result.error);
       setError(message);
-      setLoading(false);
+      hide();
       return;
     }
 
@@ -38,9 +39,9 @@ export default function useRegister() {
       console.error(error);
       setError("Email ou mot de passe invalide");
     } finally {
-      setLoading(false);
+      hide();
     }
   };
 
-  return { submit, error, loading };
+  return { submit, error };
 }

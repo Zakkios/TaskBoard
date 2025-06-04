@@ -1,11 +1,10 @@
-import useLogin from "@/features/auth/login/model/useLogin";
 import { useState } from "react";
+import useLogin from "@/features/auth/login/model/useLogin";
 import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
-import Loader from "@/shared/ui/Loader/Loader";
 
 export default function LoginPage() {
-  const { submit, error, loading } = useLogin();
+  const { submit, error } = useLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,14 +18,12 @@ export default function LoginPage() {
       onSubmit={handleSubmit}
       className="flex flex-col items-center gap-4 w-full max-w-[450px]"
     >
-      {loading && <Loader />}
       <Input
         type="email"
         name="email"
         placeholder="Email"
         classNameParent="w-full"
         onChange={(e) => setEmail(e.target.value)}
-        disabled={loading}
         required
       />
       <Input
@@ -35,7 +32,6 @@ export default function LoginPage() {
         placeholder="Mot de passe"
         classNameParent="w-full"
         onChange={(e) => setPassword(e.target.value)}
-        disabled={loading}
         required
       />
       {error && (
@@ -43,11 +39,10 @@ export default function LoginPage() {
       )}
       <Button
         type="submit"
-        variant={loading ? "disabled" : "secondary"}
+        variant="secondary"
         className="w-[300px] max-w-full mt-2"
-        disabled={loading}
       >
-        {loading ? "Connexion en cours..." : "Connexion"}
+        Se connecter
       </Button>
     </form>
   );
