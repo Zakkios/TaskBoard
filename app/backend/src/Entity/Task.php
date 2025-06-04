@@ -21,10 +21,10 @@ class Task
     #[ORM\CustomIdGenerator(class: 'Ramsey\\Uuid\\Doctrine\\UuidGenerator')]
     private ?UuidInterface $id = null;
 
-    #[ORM\Column(length: 150, nullable: false)]
+    #[ORM\Column(length: 50, nullable: false)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 500, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(enumType: StatusEnum::class, type: Types::STRING)]
