@@ -1,4 +1,4 @@
-import { Task, TaskStatus } from "./Task";
+import { Task, TaskStatus } from "@/features/taskBoard/model/Task";
 
 export interface Column {
   id: TaskStatus;
