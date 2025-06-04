@@ -1,11 +1,11 @@
-import Select from "react-select";
 import { Dispatch, SetStateAction } from "react";
+import Select from "react-select";
 import Modal from "@/shared/ui/Modal/Modal";
 import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
 import reactSelectCustomStyles from "@/shared/lib/theme/reactSelectCustomStyles";
 import COLUMNS from "@/features/taskBoard/consts/columns";
-import { Tag } from "@/features/taskBoard/model/Tags";
+import { Tag } from "@/features/taskBoard/model/Tag";
 import { TaskStatus } from "@/features/taskBoard/model/Task";
 
 interface TaskModalProps {
@@ -13,7 +13,6 @@ interface TaskModalProps {
   closeModal: () => void;
   addTask: (e: React.FormEvent<HTMLFormElement>) => void;
   tags: Tag[];
-  loading: boolean;
   setTitle: Dispatch<SetStateAction<string>>;
   setDescription: Dispatch<SetStateAction<string>>;
   setStatus: Dispatch<SetStateAction<TaskStatus>>;
@@ -23,6 +22,7 @@ interface TaskModalProps {
   description?: string;
   status?: TaskStatus;
   tagsIds?: string[];
+  error?: string;
 }
 
 export default function TaskModal({
@@ -30,7 +30,6 @@ export default function TaskModal({
   closeModal,
   addTask,
   tags,
-  loading,
   setTitle,
   setDescription,
   setStatus,
@@ -40,6 +39,7 @@ export default function TaskModal({
   description = "",
   status = "todo",
   tagsIds = [],
+  error = "",
 }: TaskModalProps) {
   return (
     <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
@@ -52,7 +52,6 @@ export default function TaskModal({
           classNameParent="w-full"
           className="mb-3"
           onChange={(e) => setTitle(e.target.value)}
-          disabled={loading}
           required
         />
         <textarea
@@ -61,7 +60,6 @@ export default function TaskModal({
           value={description}
           className="w-full h-32 p-2 border border-gray-400 bg-white rounded-lg mb-3 focus:outline-none focus:ring-1 focus:ring-gray-500"
           onChange={(e) => setDescription(e.target.value)}
-          disabled={loading}
         />
         <label className="mb-3">
           État de la tâche :
@@ -119,18 +117,10 @@ export default function TaskModal({
               .filter((tag) => tagsIds.includes(tag.value))}
           />
         </label>
-        <Button
-          type="submit"
-          variant={loading ? "disabled" : "secondary"}
-          className=""
-          disabled={loading}
-        >
-          {loading
-            ? "Chargement..."
-            : taskId
-            ? "Modifier la tâche"
-            : "Ajouter une tâche"}
+        <Button type="submit" variant="secondary" className="">
+          {taskId ? "Modifier la tâche" : "Ajouter une tâche"}
         </Button>
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         <Input
           type="hidden"
           name="taskId"
