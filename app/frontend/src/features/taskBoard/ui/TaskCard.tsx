@@ -4,9 +4,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import { Task, TaskStatus } from "@/features/taskBoard/model/Task";
-import { openEditTaskModal } from "../lib/handleTaskModal";
-import { deleteTask } from "../api/task.api";
-import Loader from "@/shared/ui/Loader/Loader";
+import { openEditTaskModal } from "@/features/taskBoard/lib/handleTaskModal";
+import useTask from "@/features/taskBoard/model/useTask";
 
 interface TaskCardProps {
   task: Task;
@@ -27,7 +26,7 @@ export default function TaskCard({
   editTaskModalProps,
 }: TaskCardProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const { handleDelete } = useTask();
 
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -38,36 +37,14 @@ export default function TaskCard({
     setAnchorEl(null);
   };
 
-  const handleDelete = async () => {
-    handleClose();
-    setLoading(true);
-    try {
-      if (!task.id) {
-        console.error("Task ID is required for deletion.");
-        return;
-      }
-      if (!confirm("Êtes-vous sûr de vouloir supprimer cette tâche ?")) {
-        return;
-      }
-      await deleteTask(task.id);
-      refreshTasks();
-    } catch (error) {
-      console.error("Error confirming deletion:", error);
-      return;
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="bg-white rounded-2xl p-4 mb-4 max-h-60">
-      {loading && <Loader />}
       <div className="flex justify-between">
         <div className="flex flex-wrap">
           {task.tags.map((tag) => (
             <p
               key={tag.id}
-              className="px-1 rounded mr-1 my-1"
+              className="px-1 rounded mr-1 my-1 max-h-fit"
               style={{
                 color: `#${tag.color}`,
                 backgroundColor: `#${tag.color}20`,
@@ -121,7 +98,13 @@ export default function TaskCard({
             >
               Éditer
             </MenuItem>
-            <MenuItem onClick={handleDelete}>Supprimer</MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleDelete(task.id, handleClose, refreshTasks);
+              }}
+            >
+              Supprimer
+            </MenuItem>
           </Menu>
         </div>
       </div>
