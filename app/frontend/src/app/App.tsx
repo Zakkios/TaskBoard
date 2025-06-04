@@ -8,21 +8,24 @@ import {
 } from "@/pages/index.ts";
 import ProtectedRoute from "@/shared/lib/router/ProtectedRoute.tsx";
 import PublicRoute from "@/shared/lib/router/PublicRoute";
+import { LoaderProvider } from "@/shared/ui/Loader/LoaderProvider";
 
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<DashboardPage />} />
-          <Route path="/statistics" element={<StatisticsPage />} />
-        </Route>
-        <Route element={<PublicRoute />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-        </Route>
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <LoaderProvider>
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="/statistics" element={<StatisticsPage />} />
+          </Route>
+          <Route element={<PublicRoute />}>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </LoaderProvider>
     </div>
   );
 }
