@@ -52,7 +52,8 @@ export function closeModal({
   setStatus,
   setTagsIds,
   setTaskId,
-  setLoading,
+  setError,
+  hide,
 }: {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   setTitle: Dispatch<SetStateAction<string>>;
@@ -60,7 +61,8 @@ export function closeModal({
   setStatus: Dispatch<SetStateAction<TaskStatus>>;
   setTagsIds: Dispatch<SetStateAction<string[]>>;
   setTaskId: Dispatch<SetStateAction<string>>;
-  setLoading: Dispatch<SetStateAction<boolean>>;
+  setError: Dispatch<SetStateAction<string | null>>;
+  hide: () => void;
 }): void {
   setIsModalOpen(false);
   setTitle("");
@@ -68,5 +70,6 @@ export function closeModal({
   setStatus("todo");
   setTagsIds([]);
   setTaskId("");
-  setLoading(false);
+  setError(null);
+  hide();
 }
