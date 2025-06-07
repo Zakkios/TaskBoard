@@ -1,12 +1,23 @@
 import { Outlet, Navigate } from "react-router";
-import useAuth from "@/shared/lib/auth/useAuth";
-import Loader from "@/shared/ui/Loader/Loader";
+import { useAuth, useLoader } from "@/shared";
+import { useEffect } from "react";
 
 export default function ProtectedRoute() {
   const { loading, isAuthenticated } = useAuth();
+  const { show, hide } = useLoader();
+
+  useEffect(() => {
+    if (loading) {
+      show();
+    } else {
+      hide();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
 
   if (loading) {
-    return <Loader />;
+    return null; // Ou un fallback si tu veux
   }
+
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 }
