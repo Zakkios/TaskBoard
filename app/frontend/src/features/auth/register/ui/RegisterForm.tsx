@@ -1,10 +1,9 @@
 import { useState } from "react";
 import PasswordChecklist from "react-password-checklist";
-import useRegister from "@/features/auth/register/model/useRegister";
-import Input from "@/shared/ui/Input/Input";
-import Button from "@/shared/ui/Button/Button";
+import { useRegister } from "@/features/auth";
+import { Input, Button } from "@/shared";
 
-export default function RegisterPage() {
+export function RegisterForm() {
   const { submit, error } = useRegister();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");

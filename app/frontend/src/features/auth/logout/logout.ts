@@ -1,6 +1,6 @@
-import api from "@/shared/api/api";
+import { api } from "@/shared";
 
-export default async function logout(): Promise<boolean> {
+export async function logout(): Promise<boolean> {
   return api
     .post("logout")
     .then((res) => {

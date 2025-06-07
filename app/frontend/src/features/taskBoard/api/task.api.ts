@@ -1,5 +1,5 @@
-import api from "@/shared/api/api";
-import { Task, TaskFormData } from "@/features/taskBoard/model/Task";
+import { api } from "@/shared";
+import { Task, TaskFormData } from "@/features/taskBoard";
 
 export const getTasks = async (): Promise<Task[]> => {
   const response = await api.get(`/tasks`);

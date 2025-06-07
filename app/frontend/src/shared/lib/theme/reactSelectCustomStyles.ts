@@ -6,7 +6,7 @@ export interface ColorOption {
   color: string;
 }
 
-const reactSelectCustomStyles: StylesConfig<ColorOption, true> = {
+export const reactSelectCustomStyles: StylesConfig<ColorOption, true> = {
   option: (base, state) => {
     return {
       ...base,
@@ -27,5 +27,3 @@ const reactSelectCustomStyles: StylesConfig<ColorOption, true> = {
     };
   },
 };
-
-export default reactSelectCustomStyles;

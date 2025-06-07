@@ -1,6 +1,6 @@
 import Logo from "@/shared/assets/logo.png";
-import LoginForm from "@/features/auth/login/ui/LoginForm";
-import TextLink from "@/shared/ui/TextLink/TextLink";
+import { LoginForm } from "@/features/auth";
+import { TextLink } from "@/shared";
 
 export default function LoginPage() {
   return (

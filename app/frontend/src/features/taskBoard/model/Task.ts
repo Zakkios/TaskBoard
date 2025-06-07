@@ -1,4 +1,4 @@
-import { Tag } from "@/features/taskBoard/model/Tag";
+import { Tag } from "@/features/taskBoard";
 
 export type TaskStatus = "todo" | "doing" | "done";
 

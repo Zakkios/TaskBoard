@@ -1,9 +1,9 @@
 import clsx from "clsx";
-import { ModalProps } from "./Modal.types";
-import Button from "../Button/Button";
 import { RxCross2 } from "react-icons/rx";
+import { Button } from "@/shared";
+import { ModalProps } from "./Modal.types";
 
-export default function Modal({
+export function Modal({
   children,
   isModalOpen,
   className,

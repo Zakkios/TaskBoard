@@ -1,11 +1,12 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import IconButton from "@mui/material/IconButton";
-import { Task, TaskStatus } from "@/features/taskBoard/model/Task";
-import { openEditTaskModal } from "@/features/taskBoard/lib/handleTaskModal";
-import useTask from "@/features/taskBoard/model/useTask";
+import { Menu, MenuItem, IconButton } from "@mui/material";
+import {
+  Task,
+  TaskStatus,
+  useTask,
+  openEditTaskModal,
+} from "@/features/taskBoard";
 
 interface TaskCardProps {
   task: Task;
@@ -20,7 +21,7 @@ interface TaskCardProps {
   };
 }
 
-export default function TaskCard({
+export function TaskCard({
   task,
   refreshTasks,
   editTaskModalProps,

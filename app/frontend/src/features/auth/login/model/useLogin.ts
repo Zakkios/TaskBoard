@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { login } from "@/features/auth/login/api/login.api";
 import { useNavigate } from "react-router";
-import { loginSchema } from "@/features/auth/login/model/loginSchema";
-import { useLoader } from "@/shared/ui/Loader/useLoader";
+import { login, loginSchema } from "@/features/auth";
+import { useLoader } from "@/shared";
 
-export default function useLogin() {
+export function useLogin() {
   const { show, hide } = useLoader();
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -22,6 +21,7 @@ export default function useLogin() {
     }
 
     try {
+      console.log("test");
       await login(email, password);
       navigate("/");
     } catch (error) {

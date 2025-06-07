@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import { useLoader } from "@/shared/ui/Loader/useLoader";
-import { getTasks } from "@/features/taskBoard/api/task.api";
-import { getTags } from "@/features/taskBoard/api/tag.api";
-import { Column } from "@/features/taskBoard/model/Columns";
-import { Tag } from "@/features/taskBoard/model/Tag";
-import { Task } from "@/features/taskBoard/model/Task";
+import { useLoader } from "@/shared";
+import { getTasks, getTags, Column, Tag, Task } from "@/features/taskBoard";
 
-export default function useTaskBoardData(initialColumns: Column[]) {
+export function useTaskBoardData(initialColumns: Column[]) {
   const [columns, setColumns] = useState<Column[]>(initialColumns);
   const [tags, setTags] = useState<Tag[]>([]);
   const { show, hide } = useLoader();

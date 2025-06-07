@@ -1,12 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import Select from "react-select";
-import Modal from "@/shared/ui/Modal/Modal";
-import Input from "@/shared/ui/Input/Input";
-import Button from "@/shared/ui/Button/Button";
-import reactSelectCustomStyles from "@/shared/lib/theme/reactSelectCustomStyles";
-import COLUMNS from "@/features/taskBoard/consts/columns";
-import { Tag } from "@/features/taskBoard/model/Tag";
-import { TaskStatus } from "@/features/taskBoard/model/Task";
+import { Modal, Input, Button, reactSelectCustomStyles } from "@/shared";
+import { COLUMNS, Tag, TaskStatus } from "@/features/taskBoard";
 
 interface TaskModalProps {
   isModalOpen: boolean;
@@ -25,7 +20,7 @@ interface TaskModalProps {
   error?: string;
 }
 
-export default function TaskModal({
+export function TaskModal({
   isModalOpen,
   closeModal,
   addTask,

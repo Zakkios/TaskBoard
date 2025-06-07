@@ -1,9 +1,8 @@
 import { useState } from "react";
-import useLogin from "@/features/auth/login/model/useLogin";
-import Input from "@/shared/ui/Input/Input";
-import Button from "@/shared/ui/Button/Button";
+import { useLogin } from "@/features/auth";
+import { Input, Button } from "@/shared/ui";
 
-export default function LoginPage() {
+export function LoginForm() {
   const { submit, error } = useLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

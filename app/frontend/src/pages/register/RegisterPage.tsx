@@ -1,6 +1,6 @@
 import Logo from "@/shared/assets/logo.png";
-import RegisterForm from "@/features/auth/register/ui/RegisterForm";
-import TextLink from "@/shared/ui/TextLink/TextLink";
+import { RegisterForm } from "@/features/auth";
+import { TextLink } from "@/shared";
 
 export default function RegisterPage() {
   return (

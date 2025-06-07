@@ -1,7 +1,6 @@
-import { TaskStatus } from "@/features/taskBoard/model/Task";
-import { Column } from "@/features/taskBoard/model/Columns";
+import { TaskStatus, Column } from "@/features/taskBoard";
 
-const COLUMNS: Column[] = [
+export const COLUMNS: Column[] = [
   {
     id: "todo" as TaskStatus,
     title: "À faire",
@@ -21,5 +20,3 @@ const COLUMNS: Column[] = [
     tasks: [],
   },
 ];
-
-export default COLUMNS;

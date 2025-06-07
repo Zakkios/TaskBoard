@@ -1,4 +1,4 @@
-import api from "@/shared/api/api";
+import { api } from "@/shared";
 
 export const register = async (
   email: string,

@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { register } from "@/features/auth/register/api/register.api";
-import { registerSchema } from "@/features/auth/register/model/registerSchema";
-import { useLoader } from "@/shared/ui/Loader/useLoader";
+import { register, registerSchema } from "@/features/auth";
+import { useLoader } from "@/shared";
 
-export default function useRegister() {
+export function useRegister() {
   const { show, hide } = useLoader();
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();

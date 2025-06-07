@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { taskSchema } from "@/features/taskBoard/model/taskSchema";
-import { TaskFormData, TaskStatus } from "@/features/taskBoard/model/Task";
 import {
+  taskSchema,
+  TaskFormData,
+  TaskStatus,
   createTask,
   deleteTask,
   updateTask,
-} from "@/features/taskBoard/api/task.api";
-import { closeModal } from "@/features/taskBoard/lib/handleTaskModal";
-import { useLoader } from "@/shared/ui/Loader/useLoader";
+  closeModal,
+} from "@/features/taskBoard";
+import { useLoader } from "@/shared";
 
-export default function useTask() {
+export function useTask() {
   const [error, setError] = useState<string | null>(null);
   const { show, hide } = useLoader();
 

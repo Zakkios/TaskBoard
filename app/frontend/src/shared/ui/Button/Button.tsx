@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { ButtonProps } from "./Button.types";
 import { variantClasses } from "./Button.variant";
 
-const Button: FC<ButtonProps> = ({
+export const Button: FC<ButtonProps> = ({
   children,
   variant,
   className,
@@ -18,5 +18,3 @@ const Button: FC<ButtonProps> = ({
     </button>
   );
 };
-
-export default Button;

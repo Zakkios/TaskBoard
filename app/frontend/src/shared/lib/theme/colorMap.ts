@@ -1,5 +1,5 @@
 // Mapping explicite des couleurs pour éviter que Tailwind purge les classes dynamiques
-const colorMap: Record<string, string> = {
+export const colorMap: Record<string, string> = {
   primary: "bg-primary",
   secondary: "bg-secondary",
   tertiary: "bg-tertiary",
@@ -10,5 +10,3 @@ const colorMap: Record<string, string> = {
   orange: "bg-orange",
   green: "bg-green",
 };
-
-export default colorMap;

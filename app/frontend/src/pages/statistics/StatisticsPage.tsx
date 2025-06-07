@@ -1,14 +1,15 @@
-import Sidebar from "@/features/navigation/sidebar/Sidebar";
-import Topbar from "@/features/navigation/topbar/Topbar";
-import useAuth from "@/shared/lib/auth/useAuth";
-import Loader from "@/shared/ui/Loader/Loader";
+import { Sidebar, Topbar } from "@/features/navigation";
+import { useAuth, useLoader } from "@/shared";
 
 export default function StatisticsPage() {
   const { user, loading } = useAuth();
+  const { show, hide } = useLoader();
 
   if (loading) {
-    return <Loader />;
+    show();
+    return null;
   }
+  hide();
 
   return (
     <div>

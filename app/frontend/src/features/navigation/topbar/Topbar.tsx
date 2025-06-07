@@ -1,10 +1,9 @@
-import Button from "@/shared/ui/Button/Button";
+import { User, Button } from "@/shared";
 import { FaUser } from "react-icons/fa";
-import User from "@/shared/lib/auth/User.type";
 
 type TopbarProps = { user: User | null };
 
-export default function Topbar({ user }: TopbarProps) {
+export function Topbar({ user }: TopbarProps) {
   return (
     <div className="fixed flex justify-end items-center bg-black h-24 w-full z-20">
       <div>

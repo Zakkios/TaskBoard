@@ -1,4 +1,4 @@
-import api from "@/shared/api/api";
+import { api } from "@/shared";
 
 export const getTags = async () => {
   const response = await api.get(`/tags`);

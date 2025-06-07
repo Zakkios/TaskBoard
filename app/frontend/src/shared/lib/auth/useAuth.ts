@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import api from "@/shared/api/api";
-import User from "@/shared/lib/auth/User.type";
+import { api, User } from "@/shared";
 
-export default function useAuth(): {
+export function useAuth(): {
   loading: boolean;
   isAuthenticated: boolean;
   user: User | null;

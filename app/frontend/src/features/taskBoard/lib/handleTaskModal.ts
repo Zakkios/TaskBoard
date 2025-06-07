@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { TaskStatus } from "@/features/taskBoard/model/Task";
+import { TaskStatus } from "@/features/taskBoard";
 
 export function openCreateTaskModal({
   setIsModalOpen,

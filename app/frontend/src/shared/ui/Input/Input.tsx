@@ -1,7 +1,7 @@
 import { InputProps } from "./Input.types";
 import clsx from "clsx";
 
-export default function Input({
+export function Input({
   label,
   error,
   className,

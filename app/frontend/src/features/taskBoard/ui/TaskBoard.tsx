@@ -1,12 +1,10 @@
-import TaskColumn from "@/features/taskBoard/ui/TaskColumn";
-import { Column } from "@/features/taskBoard/model/Columns";
-import useTaskBoardData from "@/features/taskBoard/model/useTaskBoardData";
+import { TaskColumn, Column, useTaskBoardData } from "@/features/taskBoard";
 
 interface TaskBoardProps {
   initialColumns: Column[];
 }
 
-export default function TaskBoard({ initialColumns }: TaskBoardProps) {
+export function TaskBoard({ initialColumns }: TaskBoardProps) {
   const { columns, tags, fetchTasks } = useTaskBoardData(initialColumns);
 
   return (

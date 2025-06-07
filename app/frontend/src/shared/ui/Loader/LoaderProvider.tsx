@@ -1,6 +1,6 @@
 import { useState, ReactNode } from "react";
-import Loader from "@/shared/ui/Loader/Loader";
-import { LoaderContext } from "@/shared/ui/Loader/useLoader";
+import { LoaderContext } from "./useLoader";
+import Loader from "./Loader";
 
 type LoaderProviderProps = {
   children: ReactNode;

@@ -1,19 +1,18 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { GoPlus } from "react-icons/go";
-import { Column } from "@/features/taskBoard/model/Columns";
-import TaskCard from "@/features/taskBoard/ui/TaskCard";
-import colorMap from "@/shared/lib/theme/colorMap";
-import Button from "@/shared/ui/Button/Button";
-import { Task, TaskStatus } from "@/features/taskBoard/model/Task";
-import { Tag } from "@/features/taskBoard/model/Tag";
-import useTask from "@/features/taskBoard/model/useTask";
-import TaskModal from "@/features/taskBoard/ui/TaskModal";
+import { useLoader, Button, colorMap } from "@/shared";
 import {
+  Column,
+  TaskCard,
+  Task,
+  TaskStatus,
+  Tag,
+  useTask,
+  TaskModal,
   closeModal,
   openCreateTaskModal,
-} from "@/features/taskBoard/lib/handleTaskModal";
-import { useLoader } from "@/shared/ui/Loader/useLoader";
+} from "@/features/taskBoard";
 
 interface TaskColumnProps {
   column: Column;
@@ -22,7 +21,7 @@ interface TaskColumnProps {
   tags: Tag[];
 }
 
-export default function TaskColumn({
+export function TaskColumn({
   column,
   className,
   refreshTasks,

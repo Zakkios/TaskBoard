@@ -1,12 +1,12 @@
-import Logo from "@/shared/assets/logoBlanc.png";
-import Button from "@/shared/ui/Button/Button";
 import { GoHomeFill } from "react-icons/go";
+import { IoLogOut } from "react-icons/io5";
 import { BiSolidBarChartSquare } from "react-icons/bi";
 import { NavLink, useLocation, useNavigate } from "react-router";
-import { IoLogOut } from "react-icons/io5";
-import logout from "@/features/auth/logout/logout";
+import Logo from "@/shared/assets/logoBlanc.png";
+import { Button } from "@/shared";
+import { logout } from "@/features/auth";
 
-export default function Sidebar() {
+export function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   async function handleLogout() {
