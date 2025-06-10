@@ -45,7 +45,6 @@ export function useTask() {
     });
     if (!result.success) {
       const message = result.error.errors[0]?.message || "Données invalides.";
-      console.log(result.error);
       setError(message);
       hide();
       return;

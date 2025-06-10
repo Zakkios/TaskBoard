@@ -21,7 +21,6 @@ export function useLogin() {
     }
 
     try {
-      console.log("test");
       await login(email, password);
       navigate("/");
     } catch (error) {
