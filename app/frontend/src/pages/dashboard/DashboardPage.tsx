@@ -1,16 +1,24 @@
 import { Sidebar, Topbar } from "@/features/navigation";
 import { COLUMNS, TaskBoard } from "@/features/taskBoard";
 import { useAuth, useLoader } from "@/shared";
+import { useEffect } from "react";
 
 export default function DashboardPage() {
   const { user, loading } = useAuth();
   const { show, hide } = useLoader();
 
+  useEffect(() => {
+    if (loading) {
+      show();
+    } else {
+      hide();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
+
   if (loading) {
-    show();
-    return null;
+    return null; // Ou un fallback si tu veux
   }
-  hide();
 
   return (
     <div>
