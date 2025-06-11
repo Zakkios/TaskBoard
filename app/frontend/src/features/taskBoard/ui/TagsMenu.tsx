@@ -12,8 +12,8 @@ import {
   updateTag,
   createTag,
   Tag,
+  tagSchema,
 } from "@/features/taskBoard";
-import { tagSchema } from "../model/tagSchema";
 
 interface TagsMenuProps {
   tags: Tag[];

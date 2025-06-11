@@ -1,5 +1,5 @@
 import { TaskColumn, Column, useTaskBoardData } from "@/features/taskBoard";
-import { TagsMenu } from "./TagsMenu";
+import { TagsMenu } from "@/features/taskBoard";
 
 interface TaskBoardProps {
   initialColumns: Column[];
