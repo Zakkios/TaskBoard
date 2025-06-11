@@ -17,14 +17,14 @@ export default function DashboardPage() {
   }, [loading]);
 
   if (loading) {
-    return null; // Ou un fallback si tu veux
+    return null;
   }
 
   return (
     <div>
       <Topbar user={user} />
       <Sidebar />
-      <div className="ml-20 md:ml-80 pt-28">
+      <div className="ml-20 md:ml-80 pt-28 px-6">
         <TaskBoard initialColumns={COLUMNS} />
       </div>
     </div>
