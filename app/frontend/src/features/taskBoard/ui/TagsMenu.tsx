@@ -137,13 +137,16 @@ export function TagsMenu({ tags, fetchTasks }: TagsMenuProps) {
               Créer une étiquette
             </div>
           </MenuItem>
-          <div className="flex items-center w-full my-2">
-            <div className="flex-grow h-px bg-tertiary" />
-            <span className="mx-4 text-sm text-tertiary font-medium">
-              Éditer
-            </span>
-            <div className="flex-grow h-px bg-tertiary" />
-          </div>
+          {tags.length > 0 && (
+            <div className="flex items-center w-full my-2">
+              <div className="flex-grow h-px bg-tertiary" />
+              <span className="mx-4 text-sm text-tertiary font-medium">
+                Éditer
+              </span>
+              <div className="flex-grow h-px bg-tertiary" />
+            </div>
+          )}
+
           {tags.map((tag) => (
             <div
               key={tag.id}
