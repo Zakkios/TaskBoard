@@ -5,7 +5,7 @@ import { COLUMNS, Tag, TaskStatus } from "@/features/taskBoard";
 
 interface TaskModalProps {
   isModalOpen: boolean;
-  closeModal: () => void;
+  closeTaskModal: () => void;
   addTask: (e: React.FormEvent<HTMLFormElement>) => void;
   tags: Tag[];
   setTitle: Dispatch<SetStateAction<string>>;
@@ -22,7 +22,7 @@ interface TaskModalProps {
 
 export function TaskModal({
   isModalOpen,
-  closeModal,
+  closeTaskModal,
   addTask,
   tags,
   setTitle,
@@ -37,7 +37,7 @@ export function TaskModal({
   error = "",
 }: TaskModalProps) {
   return (
-    <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
+    <Modal isModalOpen={isModalOpen} closeModal={closeTaskModal}>
       <form className="flex flex-col" onSubmit={addTask}>
         <Input
           type="text"
@@ -112,7 +112,7 @@ export function TaskModal({
               .filter((tag) => tagsIds.includes(tag.value))}
           />
         </label>
-        <Button type="submit" variant="secondary" className="">
+        <Button type="submit" variant="secondary">
           {taskId ? "Modifier la tâche" : "Ajouter une tâche"}
         </Button>
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
