@@ -45,7 +45,7 @@ export function openEditTaskModal({
   setIsModalOpen(true);
 }
 
-export function closeModal({
+export function closeTaskModal({
   setIsModalOpen,
   setTitle,
   setDescription,

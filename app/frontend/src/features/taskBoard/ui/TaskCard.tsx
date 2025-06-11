@@ -58,8 +58,8 @@ export function TaskCard({
         <div>
           <IconButton
             color="inherit"
-            id="basic-button"
-            aria-controls={open ? "basic-menu" : undefined}
+            id="handle-task-button"
+            aria-controls={open ? "handle-task-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
@@ -67,13 +67,13 @@ export function TaskCard({
             <BsThreeDots size={24} />
           </IconButton>
           <Menu
-            id="basic-menu"
+            id="handle-task-menu"
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
             slotProps={{
               list: {
-                "aria-labelledby": "basic-button",
+                "aria-labelledby": "handle-task-button",
               },
             }}
           >

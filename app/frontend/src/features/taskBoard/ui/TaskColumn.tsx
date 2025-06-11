@@ -10,7 +10,7 @@ import {
   Tag,
   useTask,
   TaskModal,
-  closeModal,
+  closeTaskModal,
   openCreateTaskModal,
 } from "@/features/taskBoard";
 
@@ -84,8 +84,8 @@ export function TaskColumn({
       </div>
       <TaskModal
         isModalOpen={isModalOpen}
-        closeModal={() => {
-          closeModal({
+        closeTaskModal={() => {
+          closeTaskModal({
             setIsModalOpen,
             setTitle,
             setDescription,

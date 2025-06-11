@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLoader } from "@/shared";
 import {
   taskSchema,
   TaskFormData,
@@ -6,12 +7,12 @@ import {
   createTask,
   deleteTask,
   updateTask,
-  closeModal,
+  closeTaskModal,
 } from "@/features/taskBoard";
-import { useLoader } from "@/shared";
 
 export function useTask() {
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { show, hide } = useLoader();
 
   const submit = async (
@@ -28,6 +29,9 @@ export function useTask() {
     setTaskId: React.Dispatch<React.SetStateAction<string>>,
     refreshTasks: () => void
   ) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
     show();
     setError(null);
     const task: TaskFormData = {
@@ -47,6 +51,7 @@ export function useTask() {
       const message = result.error.errors[0]?.message || "Données invalides.";
       setError(message);
       hide();
+      setIsSubmitting(false);
       return;
     }
 
@@ -54,7 +59,7 @@ export function useTask() {
       try {
         await updateTask(taskId, task);
         refreshTasks();
-        closeModal({
+        closeTaskModal({
           setIsModalOpen,
           setTitle,
           setDescription,
@@ -66,6 +71,8 @@ export function useTask() {
         });
       } catch (error) {
         console.error("Error updating task:", error);
+      } finally {
+        setIsSubmitting(false);
       }
       return;
     }
@@ -73,7 +80,7 @@ export function useTask() {
     try {
       await createTask(task);
       refreshTasks();
-      closeModal({
+      closeTaskModal({
         setIsModalOpen,
         setTitle,
         setDescription,
@@ -85,6 +92,8 @@ export function useTask() {
       });
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
