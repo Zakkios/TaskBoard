@@ -38,9 +38,9 @@ class TaskController extends AbstractController
         if (empty($tasks)) {
             return new JsonResponse(
                 [
-                    'message' => 'Aucune tâche trouvée.',
+                    'tasks' => []
                 ],
-                JsonResponse::HTTP_NOT_FOUND
+                JsonResponse::HTTP_OK
             );
         }
 

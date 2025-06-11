@@ -37,9 +37,9 @@ class TagController extends AbstractController
         if (empty($tags)) {
             return new JsonResponse(
                 [
-                    'message' => 'Aucun tag trouvé.',
+                    'tags' => []
                 ],
-                JsonResponse::HTTP_NOT_FOUND
+                JsonResponse::HTTP_OK
             );
         }
 
