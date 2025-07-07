@@ -19,3 +19,9 @@ phpstan.neon
 ###> phpcs ###
 /tools/php-cs-fixer/vendor/
 ###< phpcs ###
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+/tests/coverage/
+/bin/.phpunit.result.cache
+###< phpunit/phpunit ###
