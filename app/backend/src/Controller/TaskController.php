@@ -125,6 +125,7 @@ class TaskController extends AbstractController
         return new JsonResponse(
             [
                 'message' => 'La tâche a bien été ajouté.',
+                'id' => $task->getId(),
             ],
             JsonResponse::HTTP_CREATED
         );
