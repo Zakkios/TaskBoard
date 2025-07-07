@@ -24,4 +24,5 @@ phpstan.neon
 /.phpunit.cache/
 /tests/coverage/
 /bin/.phpunit.result.cache
+.phpunit.result.cache
 ###< phpunit/phpunit ###

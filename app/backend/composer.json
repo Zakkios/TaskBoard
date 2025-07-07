@@ -72,7 +72,7 @@
       "php bin/console doctrine:database:create --no-interaction --env=test",
       "php bin/console doctrine:migrations:migrate --no-interaction --env=test",
       "php bin/console doctrine:fixtures:load --no-interaction --env=test",
-      "phpunit --testdox --coverage-html=./tests/coverage"
+      "phpunit -c phpunit.dist.xml --testdox --colors=always tests/"
     ],
     "auto-scripts": {
       "cache:clear": "symfony-cmd",
