@@ -39,5 +39,9 @@ class TaskInput
     #[Assert\All([
         new Assert\Type('string'),
     ])]
+    #[Assert\Count(
+        max: 5,
+        maxMessage: 'Vous ne pouvez pas sélectionner plus de {{ limit }} tag(s).'
+    )]
     public array $tags = [];
 }

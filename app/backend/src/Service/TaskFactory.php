@@ -8,7 +8,6 @@ use App\Dto\TaskInput;
 use App\Entity\Task;
 use App\Enum\StatusEnum;
 use App\Repository\TagRepository;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 

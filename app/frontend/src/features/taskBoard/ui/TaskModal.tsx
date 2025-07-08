@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Select from "react-select";
 import { Modal, Input, Button, reactSelectCustomStyles } from "@/shared";
 import { COLUMNS, Tag, TaskStatus } from "@/features/taskBoard";
@@ -36,6 +36,8 @@ export function TaskModal({
   tagsIds = [],
   error = "",
 }: TaskModalProps) {
+  const [maxTagsError, setMaxTagsError] = useState(false);
+
   return (
     <Modal isModalOpen={isModalOpen} closeModal={closeTaskModal}>
       <form className="flex flex-col" onSubmit={addTask}>
@@ -79,39 +81,41 @@ export function TaskModal({
         </label>
         <label className="mb-3">
           Étiquettes :
+          {maxTagsError && (
+            <div className="text-sm text-red-500 pb-1">
+              Vous ne pouvez pas sélectionner plus de 5 étiquettes.
+            </div>
+          )}
           <Select
             isMulti
-            options={tags.map((tag) => {
-              return {
-                value: tag.id,
-                label: tag.name,
-                color: tag.color,
-              };
-            })}
+            options={tags.map((tag) => ({
+              value: tag.id,
+              label: tag.name,
+              color: tag.color,
+            }))}
             styles={reactSelectCustomStyles}
             onChange={(selectedOptions) => {
-              if (selectedOptions) {
-                const selectedTagsIds: string[] = selectedOptions.map(
-                  (selectedOption) => {
-                    return selectedOption.value;
-                  }
-                );
-                setTagsIds(selectedTagsIds);
-              } else {
+              if (selectedOptions && selectedOptions.length > 5) {
+                setMaxTagsError(true);
                 return;
+              }
+              setMaxTagsError(false);
+              if (selectedOptions) {
+                setTagsIds(selectedOptions.map((option) => option.value));
+              } else {
+                setTagsIds([]);
               }
             }}
             value={tags
-              .map((tag) => {
-                return {
-                  value: tag.id,
-                  label: tag.name,
-                  color: tag.color,
-                };
-              })
+              .map((tag) => ({
+                value: tag.id,
+                label: tag.name,
+                color: tag.color,
+              }))
               .filter((tag) => tagsIds.includes(tag.value))}
           />
         </label>
+
         <Button type="submit" variant="secondary">
           {taskId ? "Modifier la tâche" : "Ajouter une tâche"}
         </Button>
