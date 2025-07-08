@@ -1,4 +1,10 @@
-import { TaskColumn, Column, useTaskBoardData } from "@/features/taskBoard";
+import { useState } from "react";
+import {
+  TaskColumn,
+  Column,
+  useTaskBoardData,
+  TagsFilter,
+} from "@/features/taskBoard";
 import { TagsMenu } from "@/features/taskBoard";
 
 interface TaskBoardProps {
@@ -7,12 +13,30 @@ interface TaskBoardProps {
 
 export function TaskBoard({ initialColumns }: TaskBoardProps) {
   const { columns, tags, fetchTasks } = useTaskBoardData(initialColumns);
+  const [selectedFiltersTags, setSelectedFiltersTags] = useState<string[]>([]);
+
+  const filteredColumns = columns.map((column) => ({
+    ...column,
+    tasks:
+      selectedFiltersTags.length === 0
+        ? column.tasks
+        : column.tasks.filter((task) =>
+            task.tags.some((tag) => selectedFiltersTags.includes(tag.id))
+          ),
+  }));
 
   return (
     <>
-      <TagsMenu tags={tags} fetchTasks={fetchTasks} />
+      <div className="flex mb-4">
+        <TagsFilter
+          tags={tags}
+          selectedFiltersTags={selectedFiltersTags}
+          setSelectedFiltersTags={setSelectedFiltersTags}
+        />
+        <TagsMenu tags={tags} fetchTasks={fetchTasks} />
+      </div>
       <div className="flex gap-8 overflow-auto w-full">
-        {columns.map((column: Column) => (
+        {filteredColumns.map((column: Column) => (
           <TaskColumn
             key={column.id}
             column={column}
