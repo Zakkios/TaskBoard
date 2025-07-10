@@ -23,8 +23,7 @@ export default [
     rules: {
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
-
-      // Tes règles personnalisées (optionnelles)
+      'react/react-in-jsx-scope': 'off',
       'linebreak-style': ['error', 'unix'],
       'no-plusplus': 'off',
     },
