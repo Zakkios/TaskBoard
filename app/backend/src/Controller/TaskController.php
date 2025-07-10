@@ -19,7 +19,8 @@ class TaskController extends AbstractController
     public function __construct(
         private readonly TaskRepository $taskRepository,
         private readonly TaskFactory $taskFactory,
-    ) {}
+    ) {
+    }
 
     #[Route('/api/tasks', name: 'api_tasks_by_user', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
@@ -46,14 +47,14 @@ class TaskController extends AbstractController
 
         return new JsonResponse(
             [
-                'tasks' => array_map(fn($t) => [
+                'tasks' => array_map(fn ($t) => [
                     'id' => $t->getId(),
                     'title' => $t->getTitle(),
                     'description' => $t->getDescription(),
                     'status' => $t->getStatus(),
                     'created_at' => $t->getCreatedAt()->format('Y-m-d H:i:s'),
                     'updated_at' => $t->getUpdatedAt()->format('Y-m-d H:i:s'),
-                    'tags' => array_map(fn($tag) => [
+                    'tags' => array_map(fn ($tag) => [
                         'id' => $tag->getId(),
                         'name' => $tag->getName(),
                         'color' => $tag->getColor(),
@@ -88,7 +89,7 @@ class TaskController extends AbstractController
                     'status' => $task->getStatus(),
                     'created_at' => $task->getCreatedAt()->format('Y-m-d H:i:s'),
                     'updated_at' => $task->getUpdatedAt()->format('Y-m-d H:i:s'),
-                    'tags' => array_map(fn($tag) => [
+                    'tags' => array_map(fn ($tag) => [
                         'id' => $tag->getId(),
                         'name' => $tag->getName(),
                         'color' => $tag->getColor(),

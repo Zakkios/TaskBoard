@@ -16,7 +16,8 @@ class TaskFactory
     public function __construct(
         private readonly TagRepository $tagRepository,
         private readonly ValidatorInterface $validator,
-    ) {}
+    ) {
+    }
 
     /**
      * @param array{
