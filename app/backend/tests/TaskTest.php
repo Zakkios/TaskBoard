@@ -50,12 +50,16 @@ class TaskTest extends WebTestCase
         $this->assertResponseStatusCodeSame(200);
         $this->assertIsArray($data);
         $this->assertNotEmpty($data);
-        foreach ($data as $task) {
-            $this->assertArrayHasKey('id', $task);
-            $this->assertArrayHasKey('title', $task);
-            $this->assertArrayHasKey('description', $task);
-            $this->assertArrayHasKey('status', $task);
-            $this->assertArrayHasKey('tags', $task);
+        foreach ($data as $tasks) {
+            foreach ($tasks as $task) {
+                $this->assertArrayHasKey('id', $task);
+                $this->assertArrayHasKey('title', $task);
+                $this->assertArrayHasKey('description', $task);
+                $this->assertArrayHasKey('status', $task);
+                $this->assertArrayHasKey('created_at', $task);
+                $this->assertArrayHasKey('updated_at', $task);
+                $this->assertArrayHasKey('tags', $task);
+            }
         }
     }
 
