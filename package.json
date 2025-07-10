@@ -6,10 +6,12 @@
     "up": "docker compose up -d",
     "down": "docker compose down",
     "back": "docker exec -it backend-taskBoard bash",
+    "front": "docker exec -it frontend-taskBoard sh",
     "phpcs": "docker exec -it backend-taskBoard composer run test:phpcs-fix",
     "phpstan": "docker exec -it backend-taskBoard composer run test:phpstan",
     "phpunit": "docker exec -it backend-taskBoard composer run test:phpunit",
-    "front": "docker exec -it frontend-taskBoard sh",
+    "eslint": "docker exec -it frontend-taskBoard npm run lint",
+    "eslint-fix": "docker exec -it frontend-taskBoard npx eslint . --fix",
     "sql": "docker exec -it db-mysql-taskBoard mysql -uroot -p$MYSQL_ROOT_PASSWORD"
   }
 }
