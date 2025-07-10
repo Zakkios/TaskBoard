@@ -47,8 +47,16 @@ class TaskTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
+        $this->assertResponseStatusCodeSame(200);
         $this->assertIsArray($data);
         $this->assertNotEmpty($data);
+        foreach ($data as $task) {
+            $this->assertArrayHasKey('id', $task);
+            $this->assertArrayHasKey('title', $task);
+            $this->assertArrayHasKey('description', $task);
+            $this->assertArrayHasKey('status', $task);
+            $this->assertArrayHasKey('tags', $task);
+        }
     }
 
     public function testCreateTask(): void
