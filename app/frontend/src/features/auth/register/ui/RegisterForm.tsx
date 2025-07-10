@@ -76,7 +76,7 @@ export function RegisterForm() {
         className="w-[300px] max-w-full mt-3"
         disabled={!isPasswordValid}
       >
-        S'inscrire
+        S&rsquo;inscrire
       </Button>
       {error && <p className="text-red-500">{error}</p>}
     </form>
