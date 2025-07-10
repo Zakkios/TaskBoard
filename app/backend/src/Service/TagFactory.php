@@ -11,11 +11,14 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TagFactory
 {
-
     public function __construct(
         private readonly ValidatorInterface $validator,
-    ) {}
+    ) {
+    }
 
+    /**
+     * @param array{name: string, color: string} $data
+     */
     public function hydrateTag(Tag $tag, array $data): JsonResponse|null
     {
         $tagInput = new TagInput();

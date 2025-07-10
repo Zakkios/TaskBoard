@@ -19,7 +19,8 @@ class TagController extends AbstractController
     public function __construct(
         private readonly TagRepository $tagRepository,
         private readonly TagFactory $tagFactory,
-    ) {}
+    ) {
+    }
 
     #[Route('/api/tags', name: 'api_tags_by_user', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
@@ -45,7 +46,7 @@ class TagController extends AbstractController
 
         return new JsonResponse(
             [
-                'tags' => array_map(fn($tag) => [
+                'tags' => array_map(fn ($tag) => [
                     'id' => $tag->getId(),
                     'name' => $tag->getName(),
                     'color' => $tag->getColor(),
@@ -86,6 +87,15 @@ class TagController extends AbstractController
     public function createTag(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
+        if (
+            !is_array($data) ||
+            !isset($data['name'], $data['color']) ||
+            !is_string($data['name']) ||
+            !is_string($data['color'])
+        ) {
+            return new JsonResponse(['message' => 'Données JSON invalides ou incomplètes'], JsonResponse::HTTP_BAD_REQUEST);
+        }
+
         /** @var User $user */
         $user = $this->getUser();
         $tag = new Tag();
@@ -109,6 +119,15 @@ class TagController extends AbstractController
     public function updateTag(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
+        if (
+            !is_array($data) ||
+            !isset($data['name'], $data['color']) ||
+            !is_string($data['name']) ||
+            !is_string($data['color'])
+        ) {
+            return new JsonResponse(['message' => 'Données JSON invalides ou incomplètes'], JsonResponse::HTTP_BAD_REQUEST);
+        }
+
         $tagId = $request->attributes->get('tagId');
         $tag = $this->tagRepository->find($tagId);
 
@@ -126,6 +145,7 @@ class TagController extends AbstractController
         }
 
         $this->tagRepository->save($tag);
+
         return new JsonResponse(
             [
                 'message' => 'Tag mis à jour.'
