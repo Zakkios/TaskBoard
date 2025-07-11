@@ -6,9 +6,6 @@ if [ ! -f composer.json ]; then
   exit 1
 fi
 
-echo "📁 Creating required public folders..."
-mkdir -p public/bundles/apiplatform/fonts
-
 echo "🚀 Installing PHP dependencies..."
 composer install
 
@@ -26,4 +23,4 @@ else
 fi
 
 echo "🚀 Starting Symfony server..."
-symfony server:start --no-tls --allow-http --port=8000 --listen-ip=0.0.0.0
+exec symfony server:start --no-tls --allow-http --port=8000 --listen-ip=0.0.0.0

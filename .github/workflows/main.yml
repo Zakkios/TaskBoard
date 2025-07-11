@@ -18,8 +18,12 @@ jobs:
       - name: Build the Docker image
         run: docker compose up --build -d
 
-      - name: Run backend setup script
-        run: docker exec -i backend-taskBoard /usr/local/bin/start-backend.sh
+      - name: Wait for backend to be healthy
+        run: |
+          until [ "$(docker inspect -f '{{.State.Health.Status}}' backend-taskBoard)" == "healthy" ]; do
+            echo "⏳ Waiting for backend to be healthy..."
+            sleep 3
+          done
 
       - name: Run ESLint
         run: docker exec -i frontend-taskBoard npm run lint
