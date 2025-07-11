@@ -22,7 +22,7 @@ services:
     ports:
       - 8000:8000
     env_file:
-      - ./backend-mv/.env.preprod
+      - ./app/backend/.env.preprod
       - path: ./.env
       - path: ./.env.local
         required: false
@@ -39,7 +39,7 @@ services:
     container_name: db-mysql-taskBoard-preprod
     restart: always
     environment:
-      MYSQL_DATABASE: db-mv
+      MYSQL_DATABASE: db-taskBoard
     ports:
       - 3306:3306
     volumes:
