@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /var/www/
 
 # Copie tous les fichiers du projet Symfony dans le conteneur
-COPY app/backend/ /var/www/html
+COPY app/backend/ .
 
 # Installe Composer 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
