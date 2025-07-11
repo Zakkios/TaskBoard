@@ -5,13 +5,13 @@ FROM node:23.11.0-alpine AS build
 WORKDIR /app
 
 # Copier uniquement les fichiers nécessaires à l'installation des dépendances
-COPY package*.json ./
+COPY app/frontend/package*.json ./
 
 # Installer les dépendances
 RUN npm install
 
 # Copier tous les fichiers, y compris le fichier .env, dans le conteneur
-COPY . .
+COPY app/frontend/ .
 
 # Construire l'application pour la production avec Vite
 RUN npm run build
