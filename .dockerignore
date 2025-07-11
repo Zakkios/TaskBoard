@@ -30,3 +30,7 @@ app/backend/vendor/
 # PHPUnit
 app/backend/phpunit.xml
 app/backend/.phpunit.result.cache
+
+# Docker
+.env.local
+.env.*.local
