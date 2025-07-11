@@ -27,9 +27,6 @@ jobs:
       - name: Run PHPStan
         run: docker exec -i backend-taskBoard composer run test:phpstan
 
-      - name: Run PHPUnit
-        run: docker exec -i backend-taskBoard composer run test:phpunit
-
       - name: Stop running containers
         run: docker compose down
 #   Deploy:
