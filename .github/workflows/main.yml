@@ -18,7 +18,7 @@ jobs:
       - name: Build the Docker image
         run: docker compose up --build -d
 
-      - name: Wait for backend to be healthy
+      - name: Wait for backend to be healthy (PowerShell)
         run: |
           $maxAttempts = 20
           $attempt = 0
