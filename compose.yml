@@ -12,11 +12,6 @@ services:
 
   backend:
     container_name: backend-taskBoard
-    healthcheck:
-      test: ["CMD-SHELL", "wget -q --spider http://localhost:8000 || exit 1"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
     build:
       context: .
       dockerfile: docker/backend/Dockerfile
