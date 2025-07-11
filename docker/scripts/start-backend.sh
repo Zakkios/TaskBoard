@@ -6,6 +6,9 @@ if [ ! -f composer.json ]; then
   exit 1
 fi
 
+echo "📁 Creating required public folders..."
+mkdir -p public/bundles/apiplatform/fonts
+
 echo "🚀 Installing PHP dependencies..."
 composer install
 
