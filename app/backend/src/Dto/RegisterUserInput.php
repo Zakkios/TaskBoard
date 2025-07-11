@@ -14,12 +14,12 @@ class RegisterUserInput
     public string $email;
 
     #[Assert\NotBlank]
-    #[Assert\Length(min: 8, minMessage: "Le mot de passe doit contenir au moins {{ limit }} caractères.")]
-    #[Assert\Length(max: 72, maxMessage: "Le mot de passe ne doit pas dépasser {{ limit }} caractères.")]
-    #[Assert\Regex(pattern: '/[A-Z]/', message: "Le mot de passe doit contenir au moins une lettre majuscule.")]
-    #[Assert\Regex(pattern: '/[a-z]/', message: "Le mot de passe doit contenir au moins une lettre minuscule.")]
-    #[Assert\Regex(pattern: '/[0-9]/', message: "Le mot de passe doit contenir au moins un chiffre.")]
-    #[Assert\Regex(pattern: '/[\W_]/', message: "Le mot de passe doit contenir au moins un caractère spécial.")]
+    #[Assert\Length(min: 8, minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères.')]
+    #[Assert\Length(max: 72, maxMessage: 'Le mot de passe ne doit pas dépasser {{ limit }} caractères.')]
+    #[Assert\Regex(pattern: '/[A-Z]/', message: 'Le mot de passe doit contenir au moins une lettre majuscule.')]
+    #[Assert\Regex(pattern: '/[a-z]/', message: 'Le mot de passe doit contenir au moins une lettre minuscule.')]
+    #[Assert\Regex(pattern: '/[0-9]/', message: 'Le mot de passe doit contenir au moins un chiffre.')]
+    #[Assert\Regex(pattern: '/[\W_]/', message: 'Le mot de passe doit contenir au moins un caractère spécial.')]
     #[Assert\Regex(pattern: '/^(?!.*\s).+$/', message: "Le mot de passe ne doit pas contenir d'espaces.")]
     public string $password;
 

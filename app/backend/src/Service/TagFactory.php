@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\Tag;
 use App\Dto\TagInput;
+use App\Entity\Tag;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -19,7 +19,7 @@ class TagFactory
     /**
      * @param array{name: string, color: string} $data
      */
-    public function hydrateTag(Tag $tag, array $data): JsonResponse|null
+    public function hydrateTag(Tag $tag, array $data): ?JsonResponse
     {
         $tagInput = new TagInput();
         $tagInput->name = $data['name'];

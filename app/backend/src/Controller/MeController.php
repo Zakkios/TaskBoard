@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use App\Entity\User;
 
 class MeController extends AbstractController
 {
@@ -19,7 +19,7 @@ class MeController extends AbstractController
         /** @var ?User $user */
         $user = $this->getUser();
 
-        if ($user === null) {
+        if (null === $user) {
             return new JsonResponse(['error' => 'Utilisateur non authentifié'], 401);
         }
 

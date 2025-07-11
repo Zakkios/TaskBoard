@@ -9,11 +9,6 @@ fi
 echo "🚀 Installing PHP dependencies..."
 composer install
 
-echo "🚀 Installing php-cs-fixer dependencies..."
-cd tools/php-cs-fixer
-composer install
-cd ../../
-
 # Auto-migrations activées uniquement si ENV différent de "prod"
 if [ "$ENVIRONMENT" != "prod" ]; then
   echo "🧪 ENVIRONMENT=$ENVIRONMENT → Running database migrations..."
@@ -23,4 +18,4 @@ else
 fi
 
 echo "🚀 Starting Symfony server..."
-symfony server:start --no-tls --allow-http --port=8000 --listen-ip=0.0.0.0
+exec symfony server:start --no-tls --allow-http --port=8000 --listen-ip=0.0.0.0

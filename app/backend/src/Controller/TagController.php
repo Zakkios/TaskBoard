@@ -30,7 +30,7 @@ class TagController extends AbstractController
         $user = $this->getUser();
         if (null === $user->getId()) {
             return new JsonResponse([
-                'message' => 'Utilisateur non trouvé'
+                'message' => 'Utilisateur non trouvé',
             ], JsonResponse::HTTP_NOT_FOUND);
         }
 
@@ -38,7 +38,7 @@ class TagController extends AbstractController
         if (empty($tags)) {
             return new JsonResponse(
                 [
-                    'tags' => []
+                    'tags' => [],
                 ],
                 JsonResponse::HTTP_OK
             );
@@ -88,10 +88,10 @@ class TagController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         if (
-            !is_array($data) ||
-            !isset($data['name'], $data['color']) ||
-            !is_string($data['name']) ||
-            !is_string($data['color'])
+            !is_array($data)
+            || !isset($data['name'], $data['color'])
+            || !is_string($data['name'])
+            || !is_string($data['color'])
         ) {
             return new JsonResponse(['message' => 'Données JSON invalides ou incomplètes'], JsonResponse::HTTP_BAD_REQUEST);
         }
@@ -106,9 +106,10 @@ class TagController extends AbstractController
         }
 
         $this->tagRepository->save($tag);
+
         return new JsonResponse(
             [
-                'message' => 'Tag créé'
+                'message' => 'Tag créé',
             ],
             JsonResponse::HTTP_CREATED
         );
@@ -120,10 +121,10 @@ class TagController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         if (
-            !is_array($data) ||
-            !isset($data['name'], $data['color']) ||
-            !is_string($data['name']) ||
-            !is_string($data['color'])
+            !is_array($data)
+            || !isset($data['name'], $data['color'])
+            || !is_string($data['name'])
+            || !is_string($data['color'])
         ) {
             return new JsonResponse(['message' => 'Données JSON invalides ou incomplètes'], JsonResponse::HTTP_BAD_REQUEST);
         }
@@ -148,7 +149,7 @@ class TagController extends AbstractController
 
         return new JsonResponse(
             [
-                'message' => 'Tag mis à jour.'
+                'message' => 'Tag mis à jour.',
             ],
             JsonResponse::HTTP_OK
         );
@@ -169,9 +170,10 @@ class TagController extends AbstractController
             );
         }
         $this->tagRepository->remove($tag);
+
         return new JsonResponse(
             [
-                'message' => 'Tag supprimé.'
+                'message' => 'Tag supprimé.',
             ],
             JsonResponse::HTTP_OK
         );

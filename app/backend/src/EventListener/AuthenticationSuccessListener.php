@@ -12,14 +12,12 @@ class AuthenticationSuccessListener
 
     public function __construct(
         string $cookieDomain,
-        bool   $cookieSecure,
+        bool $cookieSecure,
     ) {
         $this->cookieDomain = $cookieDomain;
         $this->cookieSecure = $cookieSecure;
     }
-    /**
-     * @param AuthenticationSuccessEvent $event
-     */
+
     public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event): void
     {
         $data = $event->getData();
@@ -47,6 +45,6 @@ class AuthenticationSuccessListener
         );
 
         $response->headers->setCookie($cookie);
-        $event->setData(['message' => "Connexion reussie"]);
+        $event->setData(['message' => 'Connexion reussie']);
     }
 }

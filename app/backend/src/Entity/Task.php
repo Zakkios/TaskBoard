@@ -90,6 +90,7 @@ class Task
     public function setStatus(StatusEnum $status): static
     {
         $this->status = $status;
+
         return $this;
     }
 
