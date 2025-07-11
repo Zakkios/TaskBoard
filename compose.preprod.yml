@@ -60,8 +60,8 @@ services:
       timeout: 5s
       retries: 5
     env_file:
-      - path: ./docker/.env
-      - path: ./docker/.env.local
+      - path: .env
+      - path: .env.local
         required: false
 
 volumes:
