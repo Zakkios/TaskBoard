@@ -22,12 +22,11 @@ services:
         condition: service_healthy
     ports:
       - 8080:8000
-    env_file:
-      - ./app/backend/.env.preprod
-      - path: ./.env
-      - stack.env
-      - path: ./.env.local
-        required: false
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_DOCKER_PASSPHRASE: ${JWT_DOCKER_PASSPHRASE}
+      APP_ENV: prod
+      APP_DEBUG: 0
     pull_policy: build
     volumes:
       - symfony-var:/var/www/var
@@ -40,7 +39,10 @@ services:
     container_name: db-mysql-taskBoard-preprod
     restart: always
     environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: db-taskBoard
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - 3306:3306
     volumes:
@@ -54,17 +56,12 @@ services:
           "-h",
           "localhost",
           "-u",
-          "root",
-          "--password=$$MYSQL_ROOT_PASSWORD",
+          "${MYSQL_USER}",
+          "--password=${MYSQL_PASSWORD}"
         ]
       interval: 10s
       timeout: 5s
       retries: 5
-    env_file:
-      - path: .env
-      - stack.env
-      - path: .env.local
-        required: false
 
 volumes:
   node_modules:
