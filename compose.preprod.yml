@@ -1,0 +1,71 @@
+services:
+  frontend:
+    container_name: frontend-taskBoard-preprod
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile.preprod
+    ports:
+      - 3000:3000
+    volumes:
+      - ./app/frontend:/app:cached
+      - node_modules:/app/node_modules
+    pull_policy: build
+
+  backend:
+    container_name: backend-taskBoard-preprod
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile.preprod
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8000:8000
+    env_file:
+      - ./backend-mv/.env.preprod
+      - path: ./.env
+      - path: ./.env.local
+        required: false
+    pull_policy: build
+    volumes:
+      - ./app/backend:/var/www:cached
+      - symfony-var:/var/www/var
+      - symfony-vendor:/var/www/vendor
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  db:
+    image: mysql:8.4
+    container_name: db-mysql-taskBoard-preprod
+    restart: always
+    environment:
+      MYSQL_DATABASE: db-mv
+    ports:
+      - 3306:3306
+    volumes:
+      - db-taskBoard:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "--password=$$MYSQL_ROOT_PASSWORD",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    env_file:
+      - path: ./docker/.env
+      - path: ./docker/.env.local
+        required: false
+
+volumes:
+  node_modules:
+  symfony-var:
+  symfony-vendor:
+  db-taskBoard:

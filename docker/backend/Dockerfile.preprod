@@ -1,0 +1,36 @@
+FROM php:8.4.6-fpm
+
+# Installez les dépendances système nécessaires pour Symfony
+RUN apt-get update && apt-get install -y \
+    git \
+    libzip-dev \
+    unzip \
+    nginx
+
+# Activer l'extension PHP pdo_mysql
+RUN docker-php-ext-install pdo_mysql
+
+# Définissez le répertoire de travail
+WORKDIR /var/www/
+
+# Copiez tous les fichiers du projet Symfony dans le conteneur
+COPY . .
+
+# Copier le fichier de configuration Nginx pour le site
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Installer Composer 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Installer Symfony
+RUN curl -1sLf https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh | bash - &&\
+    apt-get install -y symfony-cli
+
+# Exposer le port 8000 (ou tout autre port que vous utilisez pour Symfony)
+EXPOSE 8000
+
+# Lancer Nginx et PHP-FPM automatiquement lors du démarrage du conteneur
+CMD composer install --no-dev --optimize-autoloader --no-interaction && \
+    php bin/console lexik:jwt:generate-keypair --skip-if-exists && \
+    symfony console doctrine:migrations:migrate --no-interaction && \
+    service nginx start && php-fpm
