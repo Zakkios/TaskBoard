@@ -18,6 +18,9 @@ jobs:
       - name: Build the Docker image
         run: docker compose up --build -d
 
+      - name: Run backend setup script
+        run: docker exec -i backend-taskBoard /usr/local/bin/start-backend.sh
+
       - name: Run ESLint
         run: docker exec -i frontend-taskBoard npm run lint
 
