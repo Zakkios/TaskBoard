@@ -19,12 +19,23 @@ jobs:
         run: docker compose up --build -d
 
       - name: Wait for backend to be healthy
-        shell: bash
         run: |
-          until [ "$(docker inspect -f '{{.State.Health.Status}}' backend-taskBoard)" == "healthy" ]; do
-            echo "⏳ Waiting for backend to be healthy..."
-            sleep 3
-          done
+          $maxAttempts = 20
+          $attempt = 0
+          do {
+            $status = docker inspect -f '{{.State.Health.Status}}' backend-taskBoard
+            Write-Host "⏳ Current health status: $status"
+            if ($status -eq "healthy") {
+              break
+            }
+            Start-Sleep -Seconds 3
+            $attempt++
+          } while ($attempt -lt $maxAttempts)
+
+          if ($status -ne "healthy") {
+            Write-Error "❌ backend-taskBoard did not become healthy"
+            exit 1
+          }
 
       - name: Run ESLint
         run: docker exec -i frontend-taskBoard npm run lint
