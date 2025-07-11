@@ -1,0 +1,8 @@
+parameters:
+    level: max
+    paths:
+        - src/
+        - tests/
+    ignoreErrors:
+        - '#Property App\\Entity\\.*::\$id \(Ramsey\\Uuid\\UuidInterface\|null\) is never assigned Ramsey\\Uuid\\UuidInterface so it can be removed from the property type#'
+

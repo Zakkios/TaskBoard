@@ -1,0 +1,32 @@
+# Node dependencies
+**/node_modules
+/.pnp
+.pnp.js
+
+# Testing
+**/coverage
+
+# Production
+**/build
+**/dist
+
+# Misc
+**/.DS_Store
+**/.env.local
+**/.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Symfony-specific ignores
+app/backend/.env.local
+app/backend/.env.local.php
+app/backend/.env.*.local
+app/backend/config/secrets/prod/prod.decrypt.private.php
+app/backend/public/bundles/
+app/backend/var/
+app/backend/vendor/
+
+# PHPUnit
+app/backend/phpunit.xml
+app/backend/.phpunit.result.cache
