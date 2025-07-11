@@ -8,9 +8,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthenticationFailureListener
 {
-    /**
-     * @param AuthenticationFailureEvent $event
-     */
     public function onAuthenticationFailureResponse(AuthenticationFailureEvent $event): void
     {
         $response = new JWTAuthenticationFailureResponse('E-mail ou mot de passe incorrect', JsonResponse::HTTP_UNAUTHORIZED);

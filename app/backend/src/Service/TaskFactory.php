@@ -27,9 +27,8 @@ class TaskFactory
      *     tags: array<string>
      * } $data
      */
-    public function hydrateTask(Task $task, array $data): JsonResponse|null
+    public function hydrateTask(Task $task, array $data): ?JsonResponse
     {
-
         $taskInput = new TaskInput();
         $taskInput->title = $data['title'];
         $taskInput->description = $data['description'];
@@ -60,7 +59,7 @@ class TaskFactory
             if (null === $tagEntity) {
                 return new JsonResponse(
                     [
-                        'message' => 'Le tag n\'existe pas.'
+                        'message' => 'Le tag n\'existe pas.',
                     ],
                     JsonResponse::HTTP_BAD_REQUEST
                 );

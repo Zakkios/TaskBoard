@@ -18,11 +18,11 @@ class TagRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array<Tag> | null
+     * @return array<Tag>|null
      */
     public function findByUserId(UuidInterface $userId): ?array
     {
-        /** @var array<Tag> | null $result */
+        /** @var array<Tag>|null $result */
         $result = $this->createQueryBuilder('t')
             ->andWhere('t.user = :userId')
             ->setParameter('userId', $userId)

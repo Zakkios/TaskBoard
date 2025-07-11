@@ -18,11 +18,11 @@ class TaskRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array<Task> | null
+     * @return array<Task>|null
      */
     public function findByUserId(UuidInterface $userId): ?array
     {
-        /** @var array<Task> | null $result */
+        /** @var array<Task>|null $result */
         $result = $this->createQueryBuilder('t')
             ->andWhere('t.user = :userId')
             ->setParameter('userId', $userId)

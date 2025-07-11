@@ -30,7 +30,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
                 ],
             ],
             normalizationContext: ['groups' => ['read:User']]
-        )
+        ),
     ]
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -106,12 +106,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        if (empty($this->email)) {
+            throw new \LogicException('User email is not set');
+        }
+
+        return $this->email;
     }
 
     /**
@@ -121,9 +122,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         $roles[] = 'ROLE_USER';
+
         return array_values(array_unique($roles));
     }
-
 
     /**
      * @param list<string> $roles

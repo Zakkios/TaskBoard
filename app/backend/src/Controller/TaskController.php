@@ -30,7 +30,7 @@ class TaskController extends AbstractController
         $user = $this->getUser();
         if (null === $user->getId()) {
             return new JsonResponse([
-                'message' => 'Utilisateur non trouvé'
+                'message' => 'Utilisateur non trouvé',
             ], JsonResponse::HTTP_NOT_FOUND);
         }
 
@@ -39,7 +39,7 @@ class TaskController extends AbstractController
         if (empty($tasks)) {
             return new JsonResponse(
                 [
-                    'tasks' => []
+                    'tasks' => [],
                 ],
                 JsonResponse::HTTP_OK
             );
@@ -58,8 +58,8 @@ class TaskController extends AbstractController
                         'id' => $tag->getId(),
                         'name' => $tag->getName(),
                         'color' => $tag->getColor(),
-                    ], $t->getTags()->toArray())
-                ], $tasks)
+                    ], $t->getTags()->toArray()),
+                ], $tasks),
             ],
             JsonResponse::HTTP_OK
         );
@@ -93,8 +93,8 @@ class TaskController extends AbstractController
                         'id' => $tag->getId(),
                         'name' => $tag->getName(),
                         'color' => $tag->getColor(),
-                    ], $task->getTags()->toArray())
-                ]
+                    ], $task->getTags()->toArray()),
+                ],
             ]
         );
     }
@@ -209,6 +209,7 @@ class TaskController extends AbstractController
             );
         }
         $this->taskRepository->remove($task);
+
         return new JsonResponse(
             [
                 'message' => 'La tâche a bien été supprimé.',

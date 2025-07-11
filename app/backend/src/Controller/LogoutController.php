@@ -15,10 +15,10 @@ class LogoutController extends AbstractController
     #[Route('/api/logout', name: 'app_logout', methods: ['POST'])]
     public function logout(
         Request $request,
-        RefreshTokenManagerInterface $rtManager
+        RefreshTokenManagerInterface $rtManager,
     ): JsonResponse {
         $refreshTokenString = $request->cookies->get('refresh_token');
-        if (is_string($refreshTokenString) && $refreshTokenString !== '') {
+        if (is_string($refreshTokenString) && '' !== $refreshTokenString) {
             $rt = $rtManager->get($refreshTokenString);
             if ($rt) {
                 $rtManager->delete($rt);

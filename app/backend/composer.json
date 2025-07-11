@@ -65,8 +65,8 @@
   },
   "scripts": {
     "test:phpstan": "vendor/bin/phpstan analyse src --level max",
-    "test:phpcs": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src --verbose --dry-run --diff",
-    "test:phpcs-fix": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src --verbose",
+    "test:phpcs": "vendor/bin/php-cs-fixer fix src --verbose --dry-run --diff",
+    "test:phpcs-fix": "vendor/bin/php-cs-fixer fix src --verbose",
     "test:phpunit": [
       "php bin/console doctrine:database:drop --force --if-exists --env=test",
       "php bin/console doctrine:database:create --no-interaction --env=test",
@@ -96,6 +96,7 @@
   },
   "require-dev": {
     "doctrine/doctrine-fixtures-bundle": "^4.1",
+    "friendsofphp/php-cs-fixer": "^3.82",
     "phpstan/phpstan": "^2.1",
     "phpunit/phpunit": "^9.5",
     "symfony/browser-kit": "7.2.*",

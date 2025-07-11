@@ -9,11 +9,6 @@ fi
 echo "🚀 Installing PHP dependencies..."
 composer install
 
-echo "🚀 Installing php-cs-fixer dependencies..."
-cd tools/php-cs-fixer
-composer install
-cd ../../
-
 # Auto-migrations activées uniquement si ENV différent de "prod"
 if [ "$ENVIRONMENT" != "prod" ]; then
   echo "🧪 ENVIRONMENT=$ENVIRONMENT → Running database migrations..."
