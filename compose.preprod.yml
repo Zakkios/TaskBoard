@@ -5,9 +5,8 @@ services:
       context: .
       dockerfile: docker/frontend/Dockerfile.preprod
     ports:
-      - 3000:3000
+      - 80:3000
     volumes:
-      - ./app/frontend:/app:cached
       - node_modules:/app/node_modules
     pull_policy: build
 
@@ -28,7 +27,6 @@ services:
         required: false
     pull_policy: build
     volumes:
-      - ./app/backend:/var/www:cached
       - symfony-var:/var/www/var
       - symfony-vendor:/var/www/vendor
     extra_hosts:

@@ -10,10 +10,10 @@ RUN apt-get update && apt-get install -y \
 # Activer l'extension PHP pdo_mysql
 RUN docker-php-ext-install pdo_mysql
 
-# 3. Définir le bon répertoire de travail
+# Définir le bon répertoire de travail
 WORKDIR /var/www
 
-# 4. Copier le code source Symfony
+# Copier le code source Symfony
 COPY app/backend/ .
 
 # Copier le fichier de configuration Nginx pour le site
