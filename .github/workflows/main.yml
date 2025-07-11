@@ -1,0 +1,44 @@
+name: Tests and deploy
+
+on:
+  pull_request:
+    branches: [main, dev]
+  push:
+    branches: [main, dev]
+
+jobs:
+  Tests:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stop running containers
+        run: docker compose down
+
+      - name: Build the Docker image
+        run: docker compose up --build -d
+
+      - name: Run ESLint
+        run: docker exec -i frontend-taskBoard npm run lint
+
+      - name: Run PHPCS
+        run: docker exec -i backend-taskBoard composer run test:phpcs
+
+      - name: Run PHPStan
+        run: docker exec -i backend-taskBoard composer run test:phpstan
+
+      - name: Run PHPUnit
+        run: docker exec -i backend-taskBoard composer run test:phpunit
+
+      - name: Stop running containers
+        run: docker compose down
+#   Deploy:
+#     needs: Tests
+#     runs-on: ubuntu-latest
+#     if: github.ref == 'refs/heads/main'
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
+
+#       - name: Trigger Portainer Webhook
+#         run: curl -X POST ${{ secrets.PORTAINER_WEBHOOK }}
