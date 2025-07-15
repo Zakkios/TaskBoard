@@ -20,6 +20,5 @@ export default function ProtectedRoute() {
     return <Loader />;
   }
 
-  console.log("PublicRoute: isAuthenticated", isAuthenticated);
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 }
