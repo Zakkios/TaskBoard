@@ -58,7 +58,7 @@ export function TaskColumn({
       </div>
       <div className="border-2 rounded-full my-5 border-secondary"></div>
       <div>
-        {column.tasks.map((task: Task) => (
+        {(column.tasks || []).map((task: Task) => (
           <TaskCard
             key={task.id}
             task={task}

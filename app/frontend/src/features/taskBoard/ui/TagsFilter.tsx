@@ -5,7 +5,7 @@ import { reactSelectCustomStyles } from "@/shared";
 import { Tag } from "@/features/taskBoard";
 
 export function TagsFilter({
-  tags,
+  tags = [],
   selectedFiltersTags,
   setSelectedFiltersTags,
 }: {

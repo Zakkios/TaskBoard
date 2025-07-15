@@ -20,7 +20,7 @@ interface TagsMenuProps {
   fetchTasks: () => Promise<void>;
 }
 
-export function TagsMenu({ tags, fetchTasks }: TagsMenuProps) {
+export function TagsMenu({ tags = [], fetchTasks }: TagsMenuProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -108,7 +108,7 @@ export function TagsMenu({ tags, fetchTasks }: TagsMenuProps) {
 
   return (
     <>
-      <div className="flex mb-4">
+      <div className="flex">
         <Button
           id="handle-tags-button"
           aria-controls={open ? "tags-menu" : undefined}

@@ -24,7 +24,7 @@ export function TaskModal({
   isModalOpen,
   closeTaskModal,
   addTask,
-  tags,
+  tags = [],
   setTitle,
   setDescription,
   setStatus,
