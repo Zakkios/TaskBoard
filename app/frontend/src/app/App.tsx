@@ -9,8 +9,16 @@ import {
 import ProtectedRoute from "@/shared/lib/router/ProtectedRoute.tsx";
 import PublicRoute from "@/shared/lib/router/PublicRoute";
 import { LoaderProvider } from "@/shared/ui/Loader/LoaderProvider";
+import Loader from "@/shared/ui/Loader/Loader";
+import { useAuth } from "@/shared";
 
 function App() {
+  const { loading } = useAuth();
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="App">
       <LoaderProvider>
