@@ -20,5 +20,6 @@ export default function PublicRoute() {
     return <Loader />;
   }
 
+  console.log("PublicRoute: isAuthenticated", isAuthenticated);
   return isAuthenticated ? <Navigate to="/" /> : <Outlet />;
 }
