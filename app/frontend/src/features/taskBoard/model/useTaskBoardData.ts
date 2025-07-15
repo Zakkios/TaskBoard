@@ -10,7 +10,8 @@ export function useTaskBoardData(initialColumns: Column[]) {
   const fetchTasks = async () => {
     show();
     try {
-      const [tasks, newTags] = await Promise.all([getTasks(), getTags()]);
+      const [tasksRaw, newTags] = await Promise.all([getTasks(), getTags()]);
+      const tasks = Array.isArray(tasksRaw) ? tasksRaw : [];
       const updatedColumns = initialColumns.map((column) => ({
         ...column,
         tasks: tasks.filter((task: Task) => task.status === column.id),
