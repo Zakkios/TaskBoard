@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLoader } from "@/shared";
 import { getTasks, getTags, Column, Tag, Task } from "@/features/taskBoard";
 
-export function useTaskBoardData(initialColumns: Column[]) {
+export function useTaskBoardData(initialColumns: Column[] = []) {
   const [columns, setColumns] = useState<Column[]>(initialColumns);
   const [tags, setTags] = useState<Tag[]>([]);
   const { show, hide } = useLoader();
@@ -14,7 +14,7 @@ export function useTaskBoardData(initialColumns: Column[]) {
       const tasks = Array.isArray(tasksRaw) ? tasksRaw : [];
       const updatedColumns = initialColumns.map((column) => ({
         ...column,
-        tasks: tasks.filter((task: Task) => task.status === column.id),
+        tasks: (tasks || []).filter((task: Task) => task.status === column.id),
       }));
       setColumns(updatedColumns);
       setTags(newTags);

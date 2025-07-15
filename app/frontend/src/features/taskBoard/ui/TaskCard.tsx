@@ -42,7 +42,7 @@ export function TaskCard({
     <div className="bg-white rounded-2xl p-4 mb-4 max-h-60">
       <div className="flex justify-between">
         <div className="flex flex-wrap">
-          {task.tags.map((tag) => (
+          {(task.tags || []).map((tag) => (
             <p
               key={tag.id}
               className="px-1 rounded mr-1 my-1 max-h-fit"
@@ -90,7 +90,7 @@ export function TaskCard({
                     status: task.status,
                     title: task.title,
                     description: task.description,
-                    tagsIds: task.tags.map((tag) => tag.id),
+                    tagsIds: (task.tags || []).map((tag) => tag.id),
                     taskId: task.id,
                   },
                 });

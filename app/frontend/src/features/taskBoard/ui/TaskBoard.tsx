@@ -11,7 +11,7 @@ interface TaskBoardProps {
   initialColumns: Column[];
 }
 
-export function TaskBoard({ initialColumns }: TaskBoardProps) {
+export function TaskBoard({ initialColumns = [] }: TaskBoardProps) {
   const { columns, tags, fetchTasks } = useTaskBoardData(initialColumns);
   const [selectedFiltersTags, setSelectedFiltersTags] = useState<string[]>([]);
 
@@ -36,7 +36,7 @@ export function TaskBoard({ initialColumns }: TaskBoardProps) {
         <TagsMenu tags={tags} fetchTasks={fetchTasks} />
       </div>
       <div className="flex gap-8 overflow-auto w-full">
-        {filteredColumns.map((column: Column) => (
+        {(filteredColumns || []).map((column: Column) => (
           <TaskColumn
             key={column.id}
             column={column}
