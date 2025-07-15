@@ -1,6 +1,7 @@
 import { Outlet, Navigate } from "react-router";
 import { useAuth, useLoader } from "@/shared";
 import { useEffect } from "react";
+import Loader from "@/shared/ui/Loader/Loader";
 
 export default function ProtectedRoute() {
   const { loading, isAuthenticated } = useAuth();
@@ -16,7 +17,7 @@ export default function ProtectedRoute() {
   }, [loading]);
 
   if (loading) {
-    return null; // Ou un fallback si tu veux
+    return <Loader />;
   }
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
