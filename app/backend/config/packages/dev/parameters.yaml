@@ -1,0 +1,4 @@
+parameters:
+    jwt_samesite: 'strict'
+    jwt_domain: localhost
+    jwt_secure: false
