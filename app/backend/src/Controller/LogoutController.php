@@ -16,6 +16,9 @@ class LogoutController extends AbstractController
     public function logout(
         Request $request,
         RefreshTokenManagerInterface $rtManager,
+        string $jwt_domain,
+        string $jwt_samesite,
+        bool $jwt_secure,
     ): JsonResponse {
         $refreshTokenString = $request->cookies->get('refresh_token');
         if (is_string($refreshTokenString) && '' !== $refreshTokenString) {
@@ -26,8 +29,9 @@ class LogoutController extends AbstractController
         }
 
         $response = new JsonResponse();
-        $response->headers->clearCookie('jwt');
-        $response->headers->clearCookie('refresh_token');
+
+        $response->headers->clearCookie('jwt', '/', $jwt_domain, $jwt_secure, true, $jwt_samesite);
+        $response->headers->clearCookie('refresh_token', '/', $jwt_domain, $jwt_secure, true, $jwt_samesite);
 
         return $response;
     }
