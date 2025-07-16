@@ -2,7 +2,7 @@
 
 namespace App\EventListener;
 
-use App\Enum\SameSite;
+use App\Enum\SameSiteEnum;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Component\HttpFoundation\Cookie;
 
@@ -10,7 +10,7 @@ class AuthenticationSuccessListener
 {
     private ?string $cookieDomain;
     private bool $cookieSecure;
-    private ?SameSite $cookieSameSite;
+    private ?SameSiteEnum $cookieSameSite;
 
     public function __construct(
         ?string $cookieDomain,
@@ -19,7 +19,7 @@ class AuthenticationSuccessListener
     ) {
         $this->cookieDomain = $cookieDomain;
         $this->cookieSecure = $cookieSecure;
-        $this->cookieSameSite = SameSite::fromString($cookieSameSite);
+        $this->cookieSameSite = SameSiteEnum::fromString($cookieSameSite);
     }
 
     public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event): void

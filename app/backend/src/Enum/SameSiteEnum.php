@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Enum;
 
-enum SameSite: string
+enum SameSiteEnum: string
 {
     case LAX = 'lax';
     case STRICT = 'strict';
