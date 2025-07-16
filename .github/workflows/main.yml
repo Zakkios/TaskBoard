@@ -30,13 +30,13 @@ jobs:
       - name: Stop running containers
         run: docker compose down
 
-  # Deploy:
-  #   needs: Tests
-  #   runs-on: ubuntu-latest
-  #   if: github.ref == 'refs/heads/main'
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v2
+  Deploy:
+    needs: Tests
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-  #     - name: Trigger Portainer Webhook
-  #       run: curl -X POST ${{ secrets.PORTAINER_WEBHOOK }}
+      - name: Trigger Portainer Webhook
+        run: curl -X POST ${{ secrets.PORTAINER_WEBHOOK }}
