@@ -2,20 +2,24 @@
 
 namespace App\EventListener;
 
+use App\Enum\SameSite;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Component\HttpFoundation\Cookie;
 
 class AuthenticationSuccessListener
 {
-    private string $cookieDomain;
+    private ?string $cookieDomain;
     private bool $cookieSecure;
+    private ?SameSite $cookieSameSite;
 
     public function __construct(
-        string $cookieDomain,
+        ?string $cookieDomain,
         bool $cookieSecure,
+        ?string $cookieSameSite,
     ) {
         $this->cookieDomain = $cookieDomain;
         $this->cookieSecure = $cookieSecure;
+        $this->cookieSameSite = SameSite::fromString($cookieSameSite);
     }
 
     public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event): void
@@ -36,12 +40,12 @@ class AuthenticationSuccessListener
             'jwt',
             $value,
             (new \DateTime('+1 hour'))->format('D, d M Y H:i:s T'),
-            '/',
+            '/', // path
             $this->cookieDomain,
             $this->cookieSecure,
-            true,
-            false,
-            'strict'
+            true,   // httpOnly
+            false,  // raw
+            $this->cookieSameSite?->value
         );
 
         $response->headers->setCookie($cookie);

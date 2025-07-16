@@ -3,10 +3,10 @@ gesdinet_jwt_refresh_token:
     ttl_update: true
     cookie:
         enabled: true
-        same_site: strict
+        same_site: '%jwt_samesite%'
         path: /
-        domain: '%env(JWT_DOMAIN)%'
+        domain: '%jwt_domain%'
         http_only: true
-        secure: '%env(JWT_SECURE)%'
+        secure: '%jwt_secure%'
         partitioned: false
         remove_token_from_body: true

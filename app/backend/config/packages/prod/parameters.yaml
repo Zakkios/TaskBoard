@@ -1,0 +1,4 @@
+parameters:
+    jwt_samesite: 'none'
+    jwt_domain: '.zakkios.fr'
+    jwt_secure: true
