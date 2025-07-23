@@ -7,6 +7,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "dark-gray"
     | "nav-item-active"
     | "nav-item"
+    | "blue-gradient"
     | "disabled";
   className?: string;
 }
