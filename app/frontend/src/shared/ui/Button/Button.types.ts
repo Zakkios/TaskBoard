@@ -4,7 +4,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   variant?:
     | "secondary"
-    | "dark-gray"
+    | "white"
     | "nav-item-active"
     | "nav-item"
     | "blue-gradient"
