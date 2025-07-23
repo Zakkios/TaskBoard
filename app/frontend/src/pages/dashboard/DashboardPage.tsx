@@ -21,7 +21,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div>
+    <div className="bg-light-gray">
       <Topbar user={user} />
       <Sidebar />
       <div className="ml-20 md:ml-80 pt-28 px-6">

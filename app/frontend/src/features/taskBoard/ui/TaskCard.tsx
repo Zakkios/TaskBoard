@@ -39,7 +39,7 @@ export function TaskCard({
   };
 
   return (
-    <div className="bg-white rounded-2xl p-4 mb-4 max-h-60">
+    <div className="bg-white rounded-2xl p-4 mb-4 max-h-60 border border-[#DBDBDB] hover:shadow-lg transition-shadow duration-200 group">
       <div className="flex justify-between">
         <div className="flex flex-wrap">
           {(task.tags || []).map((tag) => (
@@ -55,7 +55,7 @@ export function TaskCard({
             </p>
           ))}
         </div>
-        <div>
+        <div className="group-hover:opacity-100 opacity-0 transition-opacity duration-200">
           <IconButton
             color="inherit"
             id="handle-task-button"
