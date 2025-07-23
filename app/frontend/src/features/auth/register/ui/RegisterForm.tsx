@@ -53,7 +53,7 @@ export function RegisterForm() {
         onChange={(e) => setConfirmPassword(e.target.value)}
         required
       />
-      <div className="text-xs">
+      <div className="text-xs xl:block hidden">
         <PasswordChecklist
           rules={["minLength", "specialChar", "number", "capital", "match"]}
           minLength={8}
@@ -72,7 +72,7 @@ export function RegisterForm() {
       </div>
       <Button
         type="submit"
-        variant="secondary"
+        variant="blue-gradient"
         className="w-[300px] max-w-full mt-3"
         disabled={!isPasswordValid}
       >
