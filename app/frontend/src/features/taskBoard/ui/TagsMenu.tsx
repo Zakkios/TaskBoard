@@ -115,7 +115,7 @@ export function TagsMenu({ tags = [], fetchTasks }: TagsMenuProps) {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
-          className="flex gap-1 items-center border border-terciary text-tertiary p-1.5 rounded-lg cursor-pointer"
+          className="flex gap-1 bg-white items-center border border-[#DEDEDE]  text-tertiary p-1.5 rounded-lg cursor-pointer"
         >
           <MdBookmarkAdd size={20} />
           Étiquettes <MdKeyboardArrowDown size={22} />

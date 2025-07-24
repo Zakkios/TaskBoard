@@ -38,7 +38,7 @@ export function LoginForm() {
       )}
       <Button
         type="submit"
-        variant="secondary"
+        variant="blue-gradient"
         className="w-[300px] max-w-full mt-2"
       >
         Se connecter

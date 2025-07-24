@@ -31,7 +31,7 @@ export function TagsFilter({
           ...reactSelectCustomStyles,
           control: (baseStyles) => ({
             ...baseStyles,
-            borderColor: "#787486",
+            borderColor: "#DEDEDE",
             borderRadius: "0.5rem",
           }),
         }}

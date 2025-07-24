@@ -54,9 +54,9 @@ export function TaskColumn({
             colorMap[column.color]
           )}
         />{" "}
-        <p>{column.title}</p>
+        <p className="whitespace-nowrap">{column.title}</p>
+        <div className="border-1 w-full my-5 border-[#DBDBDB]"></div>
       </div>
-      <div className="border-2 rounded-full my-5 border-secondary"></div>
       <div>
         {(column.tasks || []).map((task: Task) => (
           <TaskCard
