@@ -9,6 +9,7 @@ import {
   updateTask,
   closeTaskModal,
 } from "@/features/taskBoard";
+import DOMPurify from "dompurify";
 
 export function useTask() {
   const [error, setError] = useState<string | null>(null);
@@ -31,6 +32,8 @@ export function useTask() {
   ) => {
     if (isSubmitting) return;
     setIsSubmitting(true);
+    title = DOMPurify.sanitize(title);
+    description = DOMPurify.sanitize(description);
 
     show();
     setError(null);

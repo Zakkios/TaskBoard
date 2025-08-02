@@ -7,9 +7,11 @@ export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    submit(email, password);
+    const normalizedEmail = email.trim().toLowerCase();
+    await submit(normalizedEmail, password);
+    setPassword("");
   };
 
   return (
@@ -22,7 +24,10 @@ export function LoginForm() {
         name="email"
         placeholder="Email"
         classNameParent="w-full"
+        value={email}
         onChange={(e) => setEmail(e.target.value)}
+        autoComplete="username"
+        inputMode="email"
         required
       />
       <Input
@@ -30,7 +35,9 @@ export function LoginForm() {
         name="password"
         placeholder="Mot de passe"
         classNameParent="w-full"
+        value={password}
         onChange={(e) => setPassword(e.target.value)}
+        autoComplete="current-password"
         required
       />
       {error && (
