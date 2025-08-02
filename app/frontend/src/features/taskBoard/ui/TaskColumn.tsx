@@ -50,7 +50,7 @@ export function TaskColumn({
       <div className="flex items-center gap-3 mb-4">
         <div
           className={clsx(
-            "w-[10px] h-[10px] rounded-full",
+            "min-w-[10px] min-h-[10px] rounded-full",
             colorMap[column.color]
           )}
         />{" "}
