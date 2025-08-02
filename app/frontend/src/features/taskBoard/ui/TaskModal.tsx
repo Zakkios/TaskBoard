@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import Select from "react-select";
 import { Modal, Input, Button, reactSelectCustomStyles } from "@/shared";
-import { COLUMNS, Tag, TaskStatus } from "@/features/taskBoard";
+import { COLUMNS, Tag, TaskStatus, useTask } from "@/features/taskBoard";
 
 interface TaskModalProps {
   isModalOpen: boolean;
@@ -12,6 +12,7 @@ interface TaskModalProps {
   setDescription: Dispatch<SetStateAction<string>>;
   setStatus: Dispatch<SetStateAction<TaskStatus>>;
   setTagsIds: Dispatch<SetStateAction<string[]>>;
+  refreshTasks: () => void;
   taskId?: string;
   title?: string;
   description?: string;
@@ -29,6 +30,7 @@ export function TaskModal({
   setDescription,
   setStatus,
   setTagsIds,
+  refreshTasks,
   taskId = "",
   title = "",
   description = "",
@@ -37,6 +39,7 @@ export function TaskModal({
   error = "",
 }: TaskModalProps) {
   const [maxTagsError, setMaxTagsError] = useState(false);
+  const { handleDelete } = useTask();
 
   return (
     <Modal isModalOpen={isModalOpen} closeModal={closeTaskModal}>
@@ -115,10 +118,30 @@ export function TaskModal({
               .filter((tag) => tagsIds.includes(tag.value))}
           />
         </label>
-
-        <Button type="submit" variant="secondary">
-          {taskId ? "Modifier la tâche" : "Ajouter une tâche"}
-        </Button>
+        <div className="flex justify-center gap-1 mt-4">
+          <Button type="submit" variant="blue-gradient">
+            {taskId ? "Modifier la tâche" : "Ajouter une tâche"}
+          </Button>
+          {taskId ? (
+            <Button
+              type="button"
+              variant="blue-gradient"
+              onClick={() => {
+                handleDelete(taskId, closeTaskModal, refreshTasks);
+              }}
+            >
+              Supprimer
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              variant="blue-gradient"
+              onClick={closeTaskModal}
+            >
+              Annuler
+            </Button>
+          )}
+        </div>
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         <Input
           type="hidden"

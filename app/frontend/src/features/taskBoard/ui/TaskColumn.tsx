@@ -124,6 +124,7 @@ export function TaskColumn({
         status={status}
         tagsIds={tagsIds}
         error={error ?? undefined}
+        refreshTasks={refreshTasks}
       />
     </div>
   );
