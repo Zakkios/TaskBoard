@@ -13,7 +13,11 @@ export function RegisterForm() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    submit(email, username, password, confirmPassword);
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedUsername = username.trim();
+    submit(normalizedEmail, normalizedUsername, password, confirmPassword);
+    setPassword("");
+    setConfirmPassword("");
   };
 
   return (
@@ -26,7 +30,11 @@ export function RegisterForm() {
         name="username"
         placeholder="Nom d'utilisateur"
         classNameParent="w-full"
+        value={username}
         onChange={(e) => setUsername(e.target.value)}
+        autoComplete="username"
+        autoCapitalize="none"
+        spellCheck={false}
         required
       />
       <Input
@@ -34,7 +42,12 @@ export function RegisterForm() {
         name="email"
         placeholder="Email"
         classNameParent="w-full"
+        value={email}
         onChange={(e) => setEmail(e.target.value)}
+        autoComplete="email"
+        inputMode="email"
+        autoCapitalize="none"
+        spellCheck={false}
         required
       />
       <Input
@@ -42,7 +55,9 @@ export function RegisterForm() {
         name="password"
         placeholder="Mot de passe"
         classNameParent="w-full"
+        value={password}
         onChange={(e) => setPassword(e.target.value)}
+        autoComplete="new-password"
         required
       />
       <Input
@@ -50,7 +65,9 @@ export function RegisterForm() {
         name="confirmPassword"
         placeholder="Confirmer le mot de passe"
         classNameParent="w-full"
+        value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
+        autoComplete="new-password"
         required
       />
       <div className="text-xs xl:block hidden">
