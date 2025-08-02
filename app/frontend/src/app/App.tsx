@@ -6,6 +6,7 @@ import {
   StatisticsPage,
   NotFoundPage,
 } from "@/pages/index.ts";
+import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "@/shared/lib/router/ProtectedRoute.tsx";
 import PublicRoute from "@/shared/lib/router/PublicRoute";
 import { LoaderProvider } from "@/shared/ui/Loader/LoaderProvider";
@@ -34,6 +35,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </LoaderProvider>
+      <Toaster position="top-center" />
     </div>
   );
 }

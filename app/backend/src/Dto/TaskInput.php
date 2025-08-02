@@ -16,7 +16,7 @@ class TaskInput
         minMessage: 'Le titre de la tâche doit contenir au moins {{ limit }} caractères.',
         maxMessage: 'Le titre de la tâche ne peut pas dépasser {{ limit }} caractères.'
     )]
-    public string $title;
+    public ?string $title;
 
     #[Assert\Type('string')]
     #[Assert\Length(

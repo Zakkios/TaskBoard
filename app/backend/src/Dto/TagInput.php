@@ -16,14 +16,13 @@ class TagInput
         minMessage: 'Le nom du tag doit contenir au moins {{ limit }} caractère.',
         maxMessage: 'Le nom du tag ne peut pas dépasser {{ limit }} caractères.'
     )]
-    public string $name;
+    public ?string $name = null;
 
     #[Assert\NotBlank(message: 'La couleur du tag est requise.')]
     #[Assert\Type('string')]
-    #[Assert\Length(
-        min: 6,
-        max: 6,
-        exactMessage: 'La couleur du tag doit être au format hexadécimal (ex : #FF5733).'
+    #[Assert\Regex(
+        pattern: '/^[0-9a-fA-F]{6}$/',
+        message: 'La couleur du tag doit être un hexadécimal sur 6 caractères (ex : FF5733).'
     )]
-    public string $color;
+    public ?string $color = null;
 }

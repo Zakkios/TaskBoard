@@ -7,9 +7,9 @@ type TopbarProps = { user: User | null };
 export function Topbar({ user }: TopbarProps) {
   return (
     <div className="fixed flex justify-between items-center bg-white h-24 w-full z-20 px-6 border-b border-[#DEDEDE]">
-      <NavLink to="/" className={"flex pl-8 items-center gap-3"}>
-        <Logo size={20} />
-        <h1 className="text-2xl font-extrabold">TaskBoard</h1>
+      <NavLink to="/" className="flex md:pl-8 items-center gap-3">
+        <Logo size="sm" containerClassName="border-[#E5E7EB]" />
+        <h1 className="hidden md:block text-xl font-extrabold">TaskBoard</h1>
       </NavLink>
       <div>
         <Button variant="white">

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { register, registerSchema } from "@/features/auth";
 import { useLoader } from "@/shared";
+import toast from "react-hot-toast";
 
 export function useRegister() {
   const { show, hide } = useLoader();
@@ -32,6 +33,7 @@ export function useRegister() {
 
     try {
       await register(email, username, password);
+      toast.success("Compte créé avec succès !");
       navigate("/");
     } catch (error) {
       console.error(error);

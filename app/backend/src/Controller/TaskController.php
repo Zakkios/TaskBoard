@@ -80,6 +80,17 @@ class TaskController extends AbstractController
             );
         }
 
+        /** @var User $user */
+        $user = $this->getUser();
+        /** @var User $taskUser */
+        $taskUser = $task->getUser();
+        if ($taskUser->getId() !== $user->getId()) {
+            return new JsonResponse(
+                ['message' => 'Accès interdit à cette tâche.'],
+                JsonResponse::HTTP_FORBIDDEN
+            );
+        }
+
         return new JsonResponse(
             [
                 'task' => [
