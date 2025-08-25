@@ -9,7 +9,6 @@ export function RegisterForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -76,7 +75,6 @@ export function RegisterForm() {
           minLength={8}
           value={password}
           valueAgain={confirmPassword}
-          onChange={(isValid) => setIsPasswordValid(isValid)}
           messages={{
             minLength: "Le mot de passe doit avoir au moins 8 caractères.",
             specialChar:
@@ -91,11 +89,10 @@ export function RegisterForm() {
         type="submit"
         variant="blue-gradient"
         className="w-[300px] max-w-full mt-3"
-        disabled={!isPasswordValid}
       >
         S&rsquo;inscrire
       </Button>
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-red-700 text-center">{error}</p>}
     </form>
   );
 }
