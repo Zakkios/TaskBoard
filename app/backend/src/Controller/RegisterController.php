@@ -43,11 +43,11 @@ class RegisterController extends AbstractController
         }
 
         if ($em->getRepository(User::class)->findOneBy(['email' => $data->email])) {
-            return new JsonResponse(['errors' => ['email' => ['Cet email est déjà utilisé.']]], 400);
+            return new JsonResponse(['errors' => ['message' => ['Cet email est déjà utilisé.']]], 400);
         }
 
         if ($em->getRepository(User::class)->findOneBy(['username' => $data->username])) {
-            return new JsonResponse(['errors' => ['username' => ['Ce nom d\'utilisateur est déjà utilisé.']]], 400);
+            return new JsonResponse(['errors' => ['message' => ['Ce nom d\'utilisateur est déjà utilisé.']]], 400);
         }
 
         $user = new User();

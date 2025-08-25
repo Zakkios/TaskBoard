@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { register, registerSchema } from "@/features/auth";
-import { useLoader } from "@/shared";
+import { useLoader, extractApiMessage } from "@/shared";
 import toast from "react-hot-toast";
 
 export function useRegister() {
@@ -35,9 +35,8 @@ export function useRegister() {
       await register(email, username, password);
       toast.success("Compte créé avec succès !");
       navigate("/");
-    } catch (error) {
-      console.error(error);
-      setError("Email ou mot de passe invalide");
+    } catch (e) {
+      setError(extractApiMessage(e));
     } finally {
       hide();
     }

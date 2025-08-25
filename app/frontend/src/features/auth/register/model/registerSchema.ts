@@ -18,9 +18,18 @@ export const registerSchema = z
       .string()
       .min(8, "Le mot de passe doit contenir au moins 8 caractères.")
       .max(72, "Le mot de passe ne doit pas dépasser 72 caractères.")
-      .regex(/[A-Z]/, "Une majuscule est requise.")
-      .regex(/[0-9]/, "Un chiffre est requis.")
-      .regex(/[^A-Za-z0-9]/, "Un caractère spécial est requis."),
+      .regex(
+        /[A-Z]/,
+        "Le mot de passe doit contenir au moins une majuscule est requise."
+      )
+      .regex(
+        /[0-9]/,
+        "Le mot de passe doit contenir au moins un chiffre est requis."
+      )
+      .regex(
+        /[^A-Za-z0-9]/,
+        "Le mot de passe doit contenir au moins un caractère spécial est requis."
+      ),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
