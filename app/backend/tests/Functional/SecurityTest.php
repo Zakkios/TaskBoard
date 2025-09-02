@@ -13,9 +13,9 @@ class SecurityTest extends WebTestCase
 
     public function testOneUserCannotAccessAnotherUsersTask(): void
     {
-        // ----- User A -----
+        // User A 
         $clientA = static::createClient();
-        $this->login($clientA, 'test@example.com', 'password');
+        $this->login($clientA, 'test@example.com', 'Password0!');
 
         $clientA->jsonRequest('POST', '/api/tasks', [
             'title' => 'Privée A',
@@ -38,7 +38,7 @@ class SecurityTest extends WebTestCase
         // Ferme le client pour éviter les conflits de session
         self::ensureKernelShutdown();
 
-        // ----- User B -----
+        // User B 
         $clientB = static::createClient();
         [$emailB, $usernameB, $passwordB] = $this->registerUser($clientB);
         $this->login($clientB, $emailB, $passwordB);

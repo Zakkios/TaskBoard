@@ -15,7 +15,7 @@ class TaskTest extends WebTestCase
     public function testListTasks(): void
     {
         $client = static::createClient();
-        $this->login($client, 'test@example.com', 'password');
+        $this->login($client, 'test@example.com', 'Password0!');
 
         $client->request('GET', '/api/tasks');
         $this->assertResponseIsSuccessful();
@@ -26,7 +26,7 @@ class TaskTest extends WebTestCase
     public function testCreateTaskSuccess(): void
     {
         $client = static::createClient();
-        $this->login($client, 'test@example.com', 'password');
+        $this->login($client, 'test@example.com', 'Password0!');
 
         $client->jsonRequest('POST', '/api/tasks', [
             'title' => 'Nouvelle tâche',
@@ -52,7 +52,7 @@ class TaskTest extends WebTestCase
     public function testCreateTaskValidationErrors(): void
     {
         $client = static::createClient();
-        $this->login($client, 'test@example.com', 'password');
+        $this->login($client, 'test@example.com', 'Password0!');
 
         $client->jsonRequest('POST', '/api/tasks', [
             'description' => '…',
@@ -71,7 +71,7 @@ class TaskTest extends WebTestCase
     public function testUpdateTask(): void
     {
         $client = static::createClient();
-        $this->login($client, 'test@example.com', 'password');
+        $this->login($client, 'test@example.com', 'Password0!');
 
         // CREATE
         $client->jsonRequest('POST', '/api/tasks', [
@@ -107,7 +107,7 @@ class TaskTest extends WebTestCase
     public function testDeleteTask(): void
     {
         $client = static::createClient();
-        $this->login($client, 'test@example.com', 'password');
+        $this->login($client, 'test@example.com', 'Password0!');
 
         // CREATE
         $client->jsonRequest('POST', '/api/tasks', [

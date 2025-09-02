@@ -12,7 +12,7 @@ final class AuthenticationTest extends WebTestCase
         $client = static::createClient();
         $client->jsonRequest('POST', '/api/login_check', [
             'username' => 'test@example.com',
-            'password' => 'password',
+            'password' => 'Password0!',
         ]);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);

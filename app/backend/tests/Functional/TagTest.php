@@ -14,7 +14,7 @@ class TagTest extends WebTestCase
     public function testCreateUpdateDeleteTag(): void
     {
         $client = static::createClient();
-        $this->login($client, 'test@example.com', 'password');
+        $this->login($client, 'test@example.com', 'Password0!');
 
         // CREATE
         $client->jsonRequest('POST', '/api/tags', [
@@ -48,7 +48,7 @@ class TagTest extends WebTestCase
     public function testValidationErrors(): void
     {
         $client = static::createClient();
-        $this->login($client, 'test@example.com', 'password');
+        $this->login($client, 'test@example.com', 'Password0!');
 
 
         $client->jsonRequest('POST', '/api/tags', [
