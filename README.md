@@ -111,59 +111,102 @@ npm run sql         # client mysql dans le conteneur DB
 
 ---
 
-## 7. Plan de déploiement — Production
+## 7. Plan de déploiement — Production (VPS + Portainer + Nginx Proxy Manager)
 
-> Exemple VPS + Docker + **reverse proxy Nginx/Nginx Proxy Manager**. Adapter domaines & secrets.
+### 7.1 Préparer le serveur (one-shot)
 
-### 7.1 Préparer le serveur
-
-1. Installer Docker & Compose.
-2. Créer `/srv/taskboard/{app,env,backups,logs}` et un **utilisateur non-root** membre du groupe docker.
-3. Copier `docker-compose.prod.yml` (cf. annexe A) dans `/srv/taskboard/`.
+1. Installer **Docker** et **Docker Compose**.
+2. Installer **Portainer** (agent ou standalone) et y accéder (compte admin).
+3. Créer l’arborescence sur le VPS :
+   ```
+   /srv/taskboard/
+     ├─ env/                 # .env prod (DB, JWT, etc.)
+     ├─ data/                # volumes persos (ex: mysql)
+     ├─ logs/
+     └─ docker-compose.prod.yml
+   ```
+4. Créer un utilisateur **non-root** membre du groupe `docker`.
 
 ### 7.2 Secrets & variables
 
-- Créer `/srv/taskboard/env/.env` (mots de passe DB, `JWT_PASSPHRASE`, etc.).
-- Déployer les clés JWT dans `/srv/taskboard/app/backend/config/jwt/` (**chmod 600**).
-- Ne pas commiter de secrets ; utiliser **secrets CI/CD**.
+- Déposer le fichier **`/srv/taskboard/env/.env`** (MDP DB, `JWT_PASSPHRASE`, etc.).
+- Déployer les **clés JWT** dans `app/backend/config/jwt/` (montées en volume) et appliquer des droits stricts (`chmod 600`).
+- Ne **pas** committer ces secrets ; utiliser Secrets Portainer/GitHub si automatisé.
 
-### 7.3 Build & push d’images
+### 7.3 Stack Portainer
 
-- Idéalement via **GitHub Actions** : build images `back` et `front`, **tag daté + SHA**, push vers un **registry** privé.
-- Alternative manuelle (local) : `docker build -t registry.example.com/taskboard-back:TAG app/backend` (cf. annexe E).
+Dans **Portainer → Stacks**, créer/éditer un stack **TaskBoard** avec le `compose.preprod.yml` (images taguées ou build local), en mappant :
 
-### 7.4 Déployer
+**Déployer** la stack → vérifier `docker ps` dans Portainer (tous les conteneurs **Up/healthy**).
 
-```bash
-cd /srv/taskboard
-docker compose -f docker-compose.prod.yml pull
-docker compose -f docker-compose.prod.yml up -d
+### 7.4 Publication via Nginx Proxy Manager (NPM)
+
+Créer **deux “Proxy Hosts”** :
+
+**A) API : `api.ton-domaine.fr` → `http://127.0.0.1:8000`**
+
+- SSL **Let’s Encrypt** activé + « Force SSL ».
+- Onglet **Advanced** : coller le bloc (celui spécifique API) :
+
+```nginx
+add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+
+# Protection XSS, clickjacking, fuite de données
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-Frame-Options "DENY" always;
+add_header Referrer-Policy "no-referrer" always;
+add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+
+# CSP adaptée à l'API (uniquement self + front autorisé)
+add_header Content-Security-Policy "default-src 'none'; connect-src 'self' https://app.ton-domaine.fr; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" always;
 ```
 
-### 7.5 Migrations & données
+**B) Front : `app.ton-domaine.fr` → `http://127.0.0.1:3000`**
+
+- SSL **Let’s Encrypt** activé + « Force SSL ».
+- Onglet **Advanced** : coller le bloc (celui spécifique Front) :
+
+```nginx
+add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-Frame-Options "DENY" always;
+add_header Referrer-Policy "no-referrer" always;
+add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+
+# CSP adaptée au front (scripts, styles, images, API)
+add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://api.ton-domaine.fr; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" always;
+```
+
+### 7.5 Migrations & données (après déploiement)
+
+Les migrations se font automatiquement au déploiement mais si ce n'est pas le cas :
+Depuis Portainer (console du conteneur **backend**) :
 
 ```bash
-docker exec backend-taskBoard php bin/console doctrine:migrations:migrate --no-interaction --env=prod
+php bin/console doctrine:migrations:migrate --no-interaction --env=prod
+# (optionnel) php bin/console doctrine:fixtures:load -n --env=prod
 ```
 
 ### 7.6 Sauvegardes & restauration
 
-- Planifier `docker/scripts/backup_db.sh` quotidien (rétention 7j).
-- Utiliser `docker/scripts/restore_db.sh` documenté (voir annexes C).
+- Planifie un **backup quotidien** MySQL (script `backup_db.sh` lancé en cron sur le VPS).
+- Restaure au besoin via `restore_db.sh`.
+- Conserve au moins **7 jours** de rétention.
 
 ### 7.7 Rollback
 
-1. Identifier le **tag** stable précédent.
-2. `docker compose -f docker-compose.prod.yml pull` avec ce tag, puis `up -d`.
-3. Refaire les smoke tests.
-   > Si migration cassante : **restore** la dernière sauvegarde DB.
+1. Dans Portainer, **édite** la stack pour repointer vers l’**image tag** stable précédente (back/front).
+2. **Re-déploie** la stack.
+3. Rejoue les **smoke tests** (front & API).
+   > Si une migration a cassé le schéma : **restore** le dernier dump avant de revenir sur le tag N-1.
 
 ### 7.8 Checklist post-déploiement
 
-- [ ] `docker ps` OK ; logs sans erreurs bloquantes.
-- [ ] **/health** renvoie 200.
-- [ ] Parcours **login → créer une tâche → lister** OK.
-- [ ] Sauvegardes planifiées opérationnelles.
+- [ ] Conteneurs **Up** dans Portainer (pas d’erreurs critiques dans les **logs**).
+- [ ] `https://api.ton-domaine.fr` : **200** sur `/health` (si exposé) ou une route simple `/api`.
+- [ ] `https://app.ton-domaine.fr` : page d’accueil OK, parcours **login → créer une tâche → lister**.
+- [ ] **CSP** sans violation (devtools → onglet Console).
+- [ ] Sauvegardes **actives** et test de **restore** documenté.
 
 ---
 
